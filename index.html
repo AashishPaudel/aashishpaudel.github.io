@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aashish Paudel — Finance & Data Portfolio</title>
+<title>Aashish Paudel — Portfolio</title>
 <style>
   :root {
     --primary: #6558f5;
@@ -19,6 +19,7 @@
   }
   body {
     margin: 0; background: var(--bg); color: var(--text); font-size: 16px;
+    font-family: 'Inter', sans-serif;
   }
   a {
     color: var(--primary);
@@ -74,13 +75,13 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     cursor: pointer;
+    user-select: none;
     padding: 20px;
     display: flex;
     flex-direction: column;
     height: 390px;
     transition: box-shadow 0.25s ease;
     overflow: hidden;
-    user-select: none;
   }
   .card:hover, .card:focus-within {
     box-shadow: 0 14px 40px var(--primary);
@@ -170,20 +171,21 @@
 
   /* Modal */
   #pdfModal {
-    display: none;
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.75);
-    align-items: center;
+    background: rgba(0,0,0,0.85);
+    display: none;
     justify-content: center;
-    z-index: 9999;
+    align-items: center;
+    z-index: 10000;
   }
   #pdfContent {
-    background: #fff;
+    background: white;
     border-radius: var(--radius);
-    width: 95vw; max-width: 960px;
-    height: 85vh;
-    padding: 24px 20px;
+    width: 90vw;
+    max-width: 1060px;
+    height: 90vh;
+    padding: 28px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -191,9 +193,9 @@
   }
   #pdfClose {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 28px;
+    top: 16px;
+    right: 24px;
+    font-size: 30px;
     font-weight: 700;
     color: var(--primary);
     cursor: pointer;
@@ -201,25 +203,25 @@
   }
   canvas#pdfCanvas {
     width: 100%;
-    max-height: 76vh;
+    max-height: 80vh;
     border-radius: 18px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 26px rgba(0,0,0,0.2);
   }
   #pdfControls {
-    margin: 18px 0 0;
+    margin-top: 24px;
     display: flex;
     justify-content: center;
-    gap: 14px;
+    gap: 18px;
     width: 100%;
   }
   #pdfControls button {
     background: var(--primary);
     border: none;
-    color: white;
-    padding: 12px 28px;
-    border-radius: 14px;
+    border-radius: 16px;
+    padding: 14px 36px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
+    color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
@@ -229,20 +231,26 @@
   }
   #pageInfo {
     margin-left: auto;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--muted);
     user-select:none;
     padding: 8px 16px;
+  }
+  @media (max-width: 700px) {
+    #pdfContent {
+      width: 95vw;
+      height: 80vh;
+      padding: 24px 16px;
+    }
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
 </head>
 <body>
-
 <main>
   <section style="text-align: center; margin-bottom: 44px;">
     <h2 style="font-size: 36px; color: var(--primary); font-weight:900;">Hi 👋, I'm Aashish</h2>
-    <p style="font-size: 19px; color:var(--muted); max-width:700px;margin:16px auto 0;">
+    <p style="font-size: 19px; color: var(--muted); max-width: 700px; margin: 16px auto 0;">
       I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
     </p>
   </section>
@@ -302,7 +310,7 @@
 
 <footer>© <span id="year"></span> Aashish Paudel — Financial Analytics Portfolio</footer>
 
-<!-- Universal PDF Modal -->
+<!-- PDF Modal -->
 <div id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
   <div id="pdfContent" aria-live="polite">
     <button id="pdfClose" aria-label="Close PDF viewer">&times;</button>
@@ -340,7 +348,7 @@
 
   function renderPage(num) {
     pdfDoc.getPage(num).then(page => {
-      let containerHeight = pdfContent.clientHeight - 110;
+      let containerHeight = pdfContent.clientHeight - 135; // extra space for header and buttons
       let scale = 1;
       const viewport = page.getViewport({ scale: 1 });
       if ((viewport.height * scale) > containerHeight) {
@@ -407,7 +415,6 @@
     });
   });
 
-  // Data
   const caseStudies = [
     {
       title: 'Pricing & Channel Strategy',
@@ -426,13 +433,12 @@
     }
   ];
 
-  // Render thumbnails in grids
   const caseGrid = document.getElementById('caseStudiesGrid');
   const researchGrid = document.getElementById('researchGrid');
 
   function renderGrid(container, items) {
     container.innerHTML = '';
-    items.forEach((item) => {
+    items.forEach(item => {
       const c = document.createElement('div');
       c.className = 'card';
       c.tabIndex = 0;
@@ -449,7 +455,6 @@
     });
   }
 
-  // Initialize grids on load
   renderGrid(caseGrid, caseStudies);
   renderGrid(researchGrid, researchPapers);
 </script>
