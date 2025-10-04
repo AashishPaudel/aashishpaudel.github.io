@@ -7,7 +7,6 @@
 <style>
   :root {
     --primary: #6558f5;
-    --accent: #27c9ff;
     --bg: #f7f8fb;
     --card: #fff;
     --text: #222;
@@ -17,52 +16,19 @@
     --max-width: 1140px;
     font-family: 'Inter', sans-serif;
   }
-  body {
-    margin: 0; background: var(--bg); color: var(--text); font-size: 16px;
-  }
-  a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-  }
-  a:hover, a:focus {
-    color: var(--accent);
-    outline: none;
-  }
-  main {
-    max-width: var(--max-width);
-    margin: 36px auto;
-    padding: 0 20px;
-  }
-  .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 38px 0;
-  }
+  body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; }
+  a { color: var(--primary); text-decoration: none; font-weight: 600; }
+  main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px; }
+  .tabs { display: flex; justify-content: center; gap: 30px; margin: 38px 0; }
   .tab-button {
-    background: var(--card);
-    color: var(--text);
-    font-weight: 700;
-    font-size: 16px;
-    padding: 13px 36px;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    transition: all 0.25s;
+    background: var(--card); color: var(--text); font-weight: 700;
+    font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
+    border: none; cursor: pointer; transition: all 0.25s;
     box-shadow: 0 2px 10px rgba(101,88,245,0.05);
   }
-  .tab-button.active {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: var(--shadow);
-  }
-  .tab-content {
-    display: none;
-  }
-  .tab-content.active {
-    display: block;
-  }
+  .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -82,9 +48,7 @@
     transition: box-shadow 0.25s ease;
     overflow: hidden;
   }
-  .card:hover, .card:focus-within {
-    box-shadow: 0 14px 40px var(--primary);
-  }
+  .card:hover, .card:focus-within { box-shadow: 0 14px 40px var(--primary);}
   .card img.thumbnail {
     width: 100%;
     height: 176px;
@@ -93,26 +57,9 @@
     margin-bottom: 18px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
   }
-  .project-title {
-    font-weight: 800;
-    font-size: 20px;
-    margin: 16px 0 8px 0;
-    color: var(--primary);
-    user-select: none;
-  }
-  .project-description {
-    flex-grow: 1;
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-  .author {
-    font-size: 12px;
-    font-family: monospace;
-    color: var(--muted);
-  }
+  .project-title { font-weight: 800; font-size: 20px; margin: 16px 0 8px 0; color: var(--primary);}
+  .project-description { flex-grow: 1; font-weight: 500; font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+  .author { font-size: 12px; font-family: monospace; color: var(--muted);}
   .info-row {
     display: flex;
     gap: 40px;
@@ -135,87 +82,56 @@
     font-size: 24px;
     letter-spacing: 0.02em;
   }
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 14px; }
   .skill-tag {
-    background: var(--primary);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-weight: 700;
-    user-select: none;
-    font-size: 14px;
+    background: var(--primary); color: white; padding: 10px 20px;
+    border-radius: 999px; font-weight: 700; user-select: none; font-size: 14px;
   }
-  .education ul {
-    padding-left: 18px;
-    font-size: 16px;
-    color: var(--muted);
-  }
-  .education li {
-    margin-bottom: 14px;
-    line-height: 1.7;
-  }
+  .education ul { padding-left: 18px; font-size: 16px; color: var(--muted);}
+  .education li { margin-bottom: 14px; line-height: 1.7;}
   footer {
-    background: var(--primary);
-    color: white;
-    text-align: center;
-    font-weight: 700;
-    padding: 32px 12px;
-    border-radius: var(--radius) var(--radius) 0 0;
-    margin-top: 100px;
+    background: var(--primary); color: white; text-align: center; font-weight: 700;
+    padding: 32px 12px; border-radius: var(--radius) var(--radius) 0 0; margin-top: 100px;
   }
-
   /* Modal */
   #pdfModal {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.86); display: none; justify-content: center; align-items: center; z-index: 10000;
   }
   #pdfContent {
-    background: white;
+    background: #fff;
     border-radius: var(--radius);
-    width: 90vw;
-    max-width: 1060px;
-    height: 90vh;
-    padding: 14px 24px 60px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
+    width: 94vw; max-width: 1100px;
+    height: 92vh;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex; flex-direction: column; align-items: center; position: relative;
   }
   #pdfClose {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary);
-    cursor: pointer;
-    user-select: none;
+    position: absolute; top: 18px; right: 24px; font-size: 28px; font-weight: 700;
+    color: var(--primary); cursor: pointer; user-select: none; z-index: 2;
   }
   canvas#pdfCanvas {
-    width: 100%;
-    max-height: 80vh;
+    display: block;
+    background: #fcfcff;
+    box-shadow: 0 6px 26px rgba(0,0,0,0.13);
     border-radius: 18px;
-    box-shadow: 0 6px 26px rgba(0,0,0,0.2);
+    max-width: 98%; max-height: 78vh;
+    margin: 0 auto;
   }
-  #pdfControls {
-    position: absolute;
-    bottom: 18px;
-    left: 24px;
-    right: 24px;
+  .pdf-controls {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 22px;
+    width: 100%;
+    position: absolute;
+    bottom: 54px;
+    left: 0; right: 0;
+    padding: 0 26px;
+    z-index: 1;
+    box-sizing: border-box;
   }
-  #pdfControls button {
+  .pdf-controls button {
     background: var(--primary);
     border: none;
     border-radius: 16px;
@@ -225,24 +141,42 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    min-width: 120px;
   }
-  #pdfControls button:disabled {
+  .pdf-controls button:disabled {
     background: #bdb7ff;
     cursor: not-allowed;
   }
-  #pageInfo {
-    margin-left: auto;
+  .pdf-controls #prevPage { margin-right: auto; }
+  .pdf-controls #nextPage { margin-left: auto; }
+  .pdf-controls #pageInfo {
+    text-align: center;
     font-weight: 700;
+    font-size: 16px;
     color: var(--muted);
-    user-select:none;
-    padding: 8px 16px;
+    padding: 0 16px;
+  }
+  #downloadPdf {
+    position: absolute;
+    right: 24px;
+    bottom: 8px;
+    background: linear-gradient(90deg, #6558f5, #8d89ff 70%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 13px 38px;
+    cursor: pointer;
+    box-shadow: 0 2px 20px rgba(101,88,245,0.09);
   }
   @media (max-width: 700px) {
     #pdfContent {
-      width: 95vw;
-      height: 80vh;
-      padding: 14px 12px 56px 12px;
+      width: 98vw;
+      height: 89vh;
     }
+    .pdf-controls button { min-width: 68px; padding: 12px 10px; font-size: 14px; }
+    #downloadPdf { font-size: 14px; }
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
@@ -250,7 +184,7 @@
 <body>
 <main>
   <section style="text-align: center; margin-bottom: 44px;">
-    <h2 style="font-size: 36px; color: var(--primary); font-weight: 900;">Hi 👋, I'm Aashish</h2>
+    <h2 style="font-size: 36px; color: var(--primary); font-weight:900;">Hi 👋, I'm Aashish</h2>
     <p style="font-size: 19px; color: var(--muted); max-width: 700px; margin: 16px auto 0;">
       I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
     </p>
@@ -282,9 +216,14 @@
   </section>
 
   <section id="resume" class="tab-content" role="tabpanel"></section>
-  <section id="caseStudies" class="tab-content" role="tabpanel"></section>
-  <section id="researchPapers" class="tab-content" role="tabpanel"></section>
-
+  <section id="caseStudies" class="tab-content" role="tabpanel">
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Case Studies</h3>
+    <div class="cards-grid" id="caseStudiesGrid" aria-live="polite" aria-label="Case Studies"></div>
+  </section>
+  <section id="researchPapers" class="tab-content" role="tabpanel">
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Research Papers</h3>
+    <div class="cards-grid" id="researchGrid" aria-live="polite" aria-label="Research Papers"></div>
+  </section>
   <div class="info-row" id="education-section">
     <div class="info-card skills" aria-label="Skills">
       <h3>Skills</h3>
@@ -317,19 +256,17 @@
     <canvas id="pdfCanvas" role="document" aria-live="polite" aria-atomic="true"></canvas>
     <div class="pdf-controls" id="pdfControls">
       <button id="prevPage" aria-label="Previous Page">Previous</button>
+      <div id="pageInfo"></div>
       <button id="nextPage" aria-label="Next Page">Next</button>
     </div>
-    <div id="pageInfo" class="page-info"></div>
-    <button id="downloadPdf" aria-label="Download PDF" style="margin-top:12px;"></button>
+    <button id="downloadPdf" aria-label="Download PDF">Download PDF</button>
   </div>
 </div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  const tabs = document.querySelectorAll('.tab-button');
-  const tabContents = document.querySelectorAll('.tab-content');
-
+  // PDF Modal functionality
   const modal = document.getElementById('pdfModal');
   const pdfContent = document.getElementById('pdfContent');
   const pdfCanvas = document.getElementById('pdfCanvas');
@@ -347,8 +284,9 @@
   function renderPage(num) {
     pdfDoc.getPage(num).then(page => {
       let containerHeight = pdfContent.clientHeight - 100; // room for buttons
-      let scale = 1;
+      let scale = 1.35; // Larger for more clarity
       const viewport = page.getViewport({ scale: 1 });
+      // Dynamically fit page to window
       if ((viewport.height * scale) > containerHeight) {
         scale = containerHeight / viewport.height;
       }
@@ -365,15 +303,14 @@
     });
   }
 
-  function openPDF(url, title) {
-    currentPdfUrl = url;
+  function openPDF(url) {
     modal.style.display = 'flex';
+    currentPdfUrl = url;
     pdfjsLib.getDocument(url).promise.then(pdf => {
       pdfDoc = pdf;
       currentPage = 1;
       renderPage(currentPage);
     });
-    downloadBtn.textContent = `Download PDF`;
     downloadBtn.onclick = () => {
       const a = document.createElement('a');
       a.href = currentPdfUrl;
@@ -401,40 +338,40 @@
     }
   };
 
+  // Tabs/select view
+  const tabs = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tabContents.forEach(tc => tc.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab).classList.add('active');
-
-      if(tab.dataset.tab === 'resume'){
-        openPDF('assets/resume/Resume.pdf', 'Resume');
-      }
+      if(tab.dataset.tab === 'resume') openPDF('assets/resume/Resume.pdf');
     });
   });
 
+  // Case studies and research papers data
   const caseStudies = [
     {
-      title: 'Pricing & Channel Strategy',
+      title: 'Pricing and Channel Strategy Analysis',
       description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
       pdfUrl: 'assets/case-studies/CaseStudy4.pdf',
-      thumbnail: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=560&q=80'
+      thumbnail: 'Screenshot-2025-10-04-at-11.52.04-AM.jpg'
     }
   ];
 
   const researchPapers = [
     {
-      title: 'Pricing Optimization Paper',
-      description: 'Research paper on pricing optimization methodologies.',
+      title: 'Conjoint Analysis for Pricing Research',
+      description: 'Research paper on using conjoint analysis to optimize B2B SaaS pricing.',
       pdfUrl: 'assets/research-papers/ResearchPaper.pdf',
-      thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?fit=crop&w=560&q=80'
+      thumbnail: 'Screenshot-2025-10-04-at-1.22.11-AM.jpg'
     }
   ];
 
-  const caseGrid = document.getElementById('caseStudiesGrid');
-  const researchGrid = document.getElementById('researchGrid');
-
+  // Render grids on load
   function renderGrid(container, items) {
     container.innerHTML = '';
     items.forEach(item => {
@@ -453,9 +390,10 @@
       container.appendChild(c);
     });
   }
+  renderGrid(document.getElementById('caseStudiesGrid'), caseStudies);
+  renderGrid(document.getElementById('researchGrid'), researchPapers);
 
-  renderGrid(caseGrid, caseStudies);
-  renderGrid(researchGrid, researchPapers);
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
