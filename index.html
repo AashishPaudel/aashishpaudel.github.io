@@ -19,7 +19,6 @@
   }
   body {
     margin: 0; background: var(--bg); color: var(--text); font-size: 16px;
-    font-family: 'Inter', sans-serif;
   }
   a {
     color: var(--primary);
@@ -185,7 +184,7 @@
     width: 90vw;
     max-width: 1060px;
     height: 90vh;
-    padding: 28px 24px;
+    padding: 14px 24px 60px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -193,9 +192,9 @@
   }
   #pdfClose {
     position: absolute;
-    top: 16px;
-    right: 24px;
-    font-size: 30px;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--primary);
     cursor: pointer;
@@ -208,11 +207,13 @@
     box-shadow: 0 6px 26px rgba(0,0,0,0.2);
   }
   #pdfControls {
-    margin-top: 24px;
+    position: absolute;
+    bottom: 18px;
+    left: 24px;
+    right: 24px;
     display: flex;
     justify-content: center;
-    gap: 18px;
-    width: 100%;
+    gap: 22px;
   }
   #pdfControls button {
     background: var(--primary);
@@ -240,7 +241,7 @@
     #pdfContent {
       width: 95vw;
       height: 80vh;
-      padding: 24px 16px;
+      padding: 14px 12px 56px 12px;
     }
   }
 </style>
@@ -249,7 +250,7 @@
 <body>
 <main>
   <section style="text-align: center; margin-bottom: 44px;">
-    <h2 style="font-size: 36px; color: var(--primary); font-weight:900;">Hi 👋, I'm Aashish</h2>
+    <h2 style="font-size: 36px; color: var(--primary); font-weight: 900;">Hi 👋, I'm Aashish</h2>
     <p style="font-size: 19px; color: var(--muted); max-width: 700px; margin: 16px auto 0;">
       I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
     </p>
@@ -264,7 +265,7 @@
 
   <section id="projects" class="tab-content active" role="tabpanel">
     <h3 style="color: var(--primary)">Tableau Projects</h3>
-    <div class="cards-grid">
+    <div class="cards-grid" id="projectsGrid">
       <div class="card" tabindex="0" role="link" aria-label="Open Bicycle Shop Tableau Project" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/BicycleShop_17412757649010/Dashboard1', '_blank')">
         <img class="thumbnail" src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
         <div class="project-title">Bicycle Shop</div>
@@ -307,21 +308,19 @@
     </div>
   </div>
 </main>
-
 <footer>© <span id="year"></span> Aashish Paudel — Financial Analytics Portfolio</footer>
 
 <!-- PDF Modal -->
 <div id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
   <div id="pdfContent" aria-live="polite">
     <button id="pdfClose" aria-label="Close PDF viewer">&times;</button>
-    <h3 id="modalTitle" style="color:var(--primary); margin-top:0;"></h3>
     <canvas id="pdfCanvas" role="document" aria-live="polite" aria-atomic="true"></canvas>
     <div class="pdf-controls" id="pdfControls">
       <button id="prevPage" aria-label="Previous Page">Previous</button>
       <button id="nextPage" aria-label="Next Page">Next</button>
-      <button id="downloadPdf" aria-label="Download PDF">Download PDF</button>
-      <div class="page-info" id="pageInfo"></div>
     </div>
+    <div id="pageInfo" class="page-info"></div>
+    <button id="downloadPdf" aria-label="Download PDF" style="margin-top:12px;"></button>
   </div>
 </div>
 
@@ -335,7 +334,6 @@
   const pdfContent = document.getElementById('pdfContent');
   const pdfCanvas = document.getElementById('pdfCanvas');
   const ctx = pdfCanvas.getContext('2d');
-  const modalTitle = document.getElementById('modalTitle');
   const pageInfo = document.getElementById('pageInfo');
   const prevPageBtn = document.getElementById('prevPage');
   const nextPageBtn = document.getElementById('nextPage');
@@ -348,7 +346,7 @@
 
   function renderPage(num) {
     pdfDoc.getPage(num).then(page => {
-      let containerHeight = pdfContent.clientHeight - 135; // extra space for header and buttons
+      let containerHeight = pdfContent.clientHeight - 100; // room for buttons
       let scale = 1;
       const viewport = page.getViewport({ scale: 1 });
       if ((viewport.height * scale) > containerHeight) {
@@ -368,14 +366,14 @@
   }
 
   function openPDF(url, title) {
-    modalTitle.textContent = title;
-    modal.style.display = 'flex';
     currentPdfUrl = url;
+    modal.style.display = 'flex';
     pdfjsLib.getDocument(url).promise.then(pdf => {
       pdfDoc = pdf;
       currentPage = 1;
       renderPage(currentPage);
     });
+    downloadBtn.textContent = `Download PDF`;
     downloadBtn.onclick = () => {
       const a = document.createElement('a');
       a.href = currentPdfUrl;
@@ -409,7 +407,8 @@
       tabContents.forEach(tc => tc.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab).classList.add('active');
-      if (tab.dataset.tab === 'resume') {
+
+      if(tab.dataset.tab === 'resume'){
         openPDF('assets/resume/Resume.pdf', 'Resume');
       }
     });
