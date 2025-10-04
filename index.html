@@ -96,7 +96,7 @@
   /* Modal */
   #pdfModal {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.86); display: none; justify-content: center; align-items: center; z-index: 10000;
+    background: rgba(0,0,0,0.90); display: none; justify-content: center; align-items: center; z-index: 10000;
   }
   #pdfContent {
     background: #fff;
@@ -108,16 +108,44 @@
     display: flex; flex-direction: column; align-items: center; position: relative;
   }
   #pdfClose {
-    position: absolute; top: 18px; right: 24px; font-size: 28px; font-weight: 700;
-    color: var(--primary); cursor: pointer; user-select: none; z-index: 2;
+    position: absolute; top: 18px; left: 24px; font-size: 32px; font-weight: 700;
+    color: var(--primary); cursor: pointer; user-select: none; z-index: 3;
+    width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #pdfClose:hover {
+    background: rgba(101, 88, 245, 0.1);
+    border-radius: 50%;
   }
   canvas#pdfCanvas {
     display: block;
     background: #fcfcff;
     box-shadow: 0 6px 26px rgba(0,0,0,0.13);
     border-radius: 18px;
-    max-width: 98%; max-height: calc(96vh - 180px);
-    margin: 70px auto 20px;
+    max-width: 98%; 
+    max-height: calc(96vh - 140px);
+    margin: 15px auto 15px;
+  }
+  .pdf-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 26px 10px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .pdf-header #pageInfo {
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    background: white;
+    padding: 10px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
   }
   .pdf-controls {
     display: flex;
@@ -128,7 +156,7 @@
     bottom: 20px;
     left: 0; right: 0;
     padding: 0 26px;
-    z-index: 1;
+    z-index: 2;
     box-sizing: border-box;
   }
   .pdf-controls button {
@@ -140,22 +168,17 @@
     font-size: 16px;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     min-width: 120px;
+  }
+  .pdf-controls button:hover:not(:disabled) {
+    background: #7d6fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(101, 88, 245, 0.3);
   }
   .pdf-controls button:disabled {
     background: #bdb7ff;
     cursor: not-allowed;
-  }
-  .pdf-controls #pageInfo {
-    text-align: center;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--text);
-    background: white;
-    padding: 12px 24px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
   #downloadPdf {
     position: absolute;
@@ -169,8 +192,13 @@
     font-weight: 700;
     padding: 13px 38px;
     cursor: pointer;
-    box-shadow: 0 2px 20px rgba(101,88,245,0.09);
-    z-index: 2;
+    box-shadow: 0 2px 20px rgba(101,88,245,0.15);
+    z-index: 3;
+    transition: all 0.3s ease;
+  }
+  #downloadPdf:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 24px rgba(101,88,245,0.3);
   }
   @media (max-width: 700px) {
     #pdfContent {
@@ -179,6 +207,7 @@
     }
     .pdf-controls button { min-width: 68px; padding: 12px 10px; font-size: 14px; }
     #downloadPdf { font-size: 14px; padding: 10px 20px; }
+    #pdfClose { font-size: 28px; }
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
@@ -232,8 +261,8 @@
       <div class="skill-tags">
         <span class="skill-tag">Python (Pandas)</span>
         <span class="skill-tag">SQL</span>
-        <span class="skill-tag">Tableau</span>
         <span class="skill-tag">SAS</span>
+        <span class="skill-tag">Tableau</span>
         <span class="skill-tag">dbt</span>
         <span class="skill-tag">Financial Modeling</span>
       </div>
@@ -256,10 +285,12 @@
   <div id="pdfContent" aria-live="polite">
     <button id="pdfClose" aria-label="Close PDF viewer">&times;</button>
     <button id="downloadPdf" aria-label="Download PDF">Download PDF</button>
+    <div class="pdf-header">
+      <div id="pageInfo"></div>
+    </div>
     <canvas id="pdfCanvas" role="document" aria-live="polite" aria-atomic="true"></canvas>
     <div class="pdf-controls" id="pdfControls">
       <button id="prevPage" aria-label="Previous Page">Previous</button>
-      <div id="pageInfo"></div>
       <button id="nextPage" aria-label="Next Page">Next</button>
     </div>
   </div>
@@ -285,7 +316,7 @@
 
   function renderPage(num) {
     pdfDoc.getPage(num).then(page => {
-      let containerHeight = pdfContent.clientHeight - 180;
+      let containerHeight = pdfContent.clientHeight - 160;
       let containerWidth = pdfContent.clientWidth - 40;
       let scale = 2.0;
       
