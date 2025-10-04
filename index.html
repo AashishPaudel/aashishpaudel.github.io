@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Aashish Paudel — Finance & Data Portfolio</title>
 <style>
   :root {
@@ -20,82 +20,65 @@
   body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px;}
   a { color: var(--primary); text-decoration: none; font-weight: 600; }
   a:hover { color: var(--accent);}
-  main {
-    max-width: var(--max-width);
-    margin: 36px auto;
-    padding: 0 20px;
-  }
-  .tabs { display: flex; justify-content: center; gap: 34px; margin: 38px 0; }
+  main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px;}
+  .tabs { display: flex; justify-content: center; gap: 34px; margin: 38px 0;}
   .tab-button {
     background: var(--card); color: var(--text); font-weight: 700;
     font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
     border: none; cursor: pointer; transition: all 0.25s;
-    box-shadow: 0 2px 10px rgba(101,88,245,0.05);
-  }
+    box-shadow: 0 2px 10px rgba(101,88,245,0.05);}
   .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
   .tab-content { display: none; }
   .tab-content.active { display: block;}
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
     gap: 38px;
+    margin-bottom: 24px;
   }
   .card {
     background: var(--card);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 26px 26px 20px 26px;
+    padding: 22px 22px 17px 22px;
     display: flex; flex-direction: column; align-items: flex-start;
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s; cursor: pointer;
   }
-  .card:hover { box-shadow: 0 12px 38px var(--primary); }
-  .card img {
-    border-radius: 12px; width:100%; margin-bottom: 18px; object-fit: cover;
-    box-shadow: 0 3px 16px #0001;
-  }
-  .project-title { font-weight: bold; font-size: 21px; margin-top: 2px; color: var(--primary);}
+  .card:hover { box-shadow: 0 12px 38px var(--primary);}
+  .card img { border-radius: 12px; width:100%; margin-bottom: 16px; object-fit: cover;}
+  .project-title { font-weight: bold; font-size: 20px; margin-top: 2px; color: var(--primary);}
   .project-description { font-size: 14px; color: var(--muted); margin-bottom: 0;}
   .author { color: var(--muted); font-size: 13px; margin-bottom: 6px;}
   .pdf-viewer-box {
-    margin: 36px auto 0 auto; background: #fff; border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 34px 16px; width:900px; max-width: 100%;
+    margin: 0 auto 0 auto; background: #fff; border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 34px 16px; width:900px; max-width: 100%; margin-bottom:40px;
   }
-  #resumeCanvas, #caseCanvas {
-    display: block;
-    margin: 0 auto 8px auto;
-    border-radius: 8px;
-    width: 100%;
-    height: auto;
-    box-shadow: 0 2px 10px #0002;
-    background: #f8f8fb;
-  }
-  .pdf-controls {
-    display: flex; justify-content: center; gap: 14px; margin-top: 8px;
-  }
+  .pdf-viewer-box.hidden { display:none; }
+  .pdf-viewer-box h3 { color:var(--primary);}
+  canvas { display:block; margin: 0 auto 8px auto; border-radius: 8px; width:100%; height:auto; background:#f8f8fb;}
+  .pdf-controls { display: flex; justify-content: center; gap: 14px; margin-top: 8px;}
   .pdf-controls button {
-    background: var(--primary); color: #fff; padding: 10px 20px; border: none;
-    border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer;
-    transition: background 0.2s;
-  }
-  .pdf-controls button:disabled { background: #c2baff; }
+    background: var(--primary); color:#fff; padding:10px 20px; border:none;
+    border-radius: 8px; font-weight:700; font-size:15px; cursor:pointer;}
+  .pdf-controls button:disabled { background: #c2baff;}
   .page-info { float: right; color: var(--muted); font-weight: bold; font-size: 14px; margin: 9px 0;}
   .info-row { display: flex; gap:40px; flex-wrap: wrap; margin-top: 60px; }
   .info-card { flex:1 1 320px; min-width:260px; background: #fff;
     padding: 30px 24px; border-radius: var(--radius); box-shadow: var(--shadow);}
   .info-card h3 { color: var(--primary); margin-top: 0;}
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 12px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 12px;}
   .skill-tag { background: var(--primary); color:#fff; padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 600;}
   .education ul { color: var(--muted); font-size: 15.5px; padding-left: 18px;}
   .education li { margin-bottom: 12px; line-height: 1.7;}
   @media (max-width: 950px) {
     .info-row { flex-direction: column; gap:22px;}
     .pdf-viewer-box { padding:17px 0; font-size: 15px;}
-    #resumeCanvas, #caseCanvas { max-width: 98vw;}
+    canvas { max-width: 98vw;}
   }
   @media (max-width: 600px) {
     main { padding: 0 4vw;}
-    .card { padding: 16px;}
-    .info-card { padding: 18px;}
+    .card { padding: 10px;}
+    .info-card { padding: 8px;}
   }
   footer { background: var(--primary); color: #fff; text-align: center; font-weight: 700; padding: 28px 10px 14px 10px; border-radius: var(--radius) var(--radius) 0 0; margin-top: 80px;}
 </style>
@@ -109,14 +92,12 @@
       I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
     </p>
   </section>
-
   <div class="tabs" role="tablist">
     <button class="tab-button active" data-tab="projects">Projects</button>
     <button class="tab-button" data-tab="resume">Resume</button>
     <button class="tab-button" data-tab="caseStudies">Case Studies</button>
     <button class="tab-button" data-tab="researchPapers">Research Paper</button>
   </div>
-
   <!-- Projects -->
   <section id="projects" class="tab-content active">
     <h3 style="color:var(--primary)">Tableau Projects</h3>
@@ -136,7 +117,7 @@
     </div>
   </section>
 
-  <!-- Resume -->
+  <!-- Resume as before -->
   <section id="resume" class="tab-content">
     <div class="pdf-viewer-box">
       <h3 style="color:var(--primary); margin-top:0;">Resume</h3>
@@ -152,8 +133,10 @@
 
   <!-- Case Studies -->
   <section id="caseStudies" class="tab-content">
-    <div class="pdf-viewer-box">
-      <h3 style="color:var(--primary); margin-top:0;">Case Study: Pricing & Channel Strategy Analysis</h3>
+    <h3 style="color:var(--primary);margin-bottom:20px;">Case Studies</h3>
+    <div class="cards-grid" id="caseStudiesGrid"></div>
+    <div id="caseDisplayBox" class="pdf-viewer-box hidden">
+      <h3 style="color:var(--primary); margin-top:0;" id="caseTitle"></h3>
       <canvas id="caseCanvas"></canvas>
       <div class="pdf-controls">
         <button id="casePrevPage">Previous</button>
@@ -166,14 +149,22 @@
 
   <!-- Research Papers -->
   <section id="researchPapers" class="tab-content">
-    <div class="pdf-viewer-box" style="text-align:center;">
-      <h3 style="color:var(--primary);margin-top:0;">Research Papers</h3>
-      <p>No research papers uploaded yet.</p>
+    <h3 style="color:var(--primary);margin-bottom:20px;">Research Papers</h3>
+    <div class="cards-grid" id="researchGrid"></div>
+    <div id="researchDisplayBox" class="pdf-viewer-box hidden">
+      <h3 style="color:var(--primary); margin-top:0;" id="researchTitle"></h3>
+      <canvas id="researchCanvas"></canvas>
+      <div class="pdf-controls">
+        <button id="researchPrevPage">Previous</button>
+        <button id="researchNextPage">Next</button>
+        <button id="researchDownload">Download PDF</button>
+      </div>
+      <div id="researchPageInfo" class="page-info"></div>
     </div>
   </section>
 
   <!-- Skills & Education row -->
-  <div class="info-row" style="margin-bottom:0;" id="education-section">
+  <div class="info-row" id="education-section">
     <div class="info-card skills">
       <h3>Skills</h3>
       <div class="skill-tags">
@@ -202,7 +193,7 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Tab panel switcher
+  // Tab switcher
   const tabs = document.querySelectorAll('.tab-button');
   const tabsContent = document.querySelectorAll('.tab-content');
   tabs.forEach(btn => {
@@ -211,13 +202,130 @@
       tabsContent.forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(btn.dataset.tab).classList.add('active');
-      // On showing PDFs, (re-)load
-      if(btn.dataset.tab==='resume') { openResumePDF('assets/resume/Resume.pdf'); }
-      if(btn.dataset.tab==='caseStudies') { openCasePDF('assets/case-studies/CaseStudy4.pdf'); }
+      // Reset all pdf viewer visibility
+      if(btn.dataset.tab==='caseStudies'){document.getElementById('caseDisplayBox').classList.add('hidden');}
+      if(btn.dataset.tab==='researchPapers'){document.getElementById('researchDisplayBox').classList.add('hidden');}
+      if(btn.dataset.tab==='resume') openResumePDF('assets/resume/Resume.pdf');
     }
   });
 
-  // ----- Resume PDF
+  // ---- CASE STUDY DATA / DYNAMIC THUMBNAILS -----
+  const caseStudies = [
+    {
+      title: "Pricing and Channel Strategy Analysis for Premium Product",
+      description: "Detailed analysis of pricing and channel impacts on premium product margin and strategy.",
+      pdfUrl: "assets/case-studies/CaseStudy4.pdf",
+      thumbnail: "https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=560&q=80"
+    }
+    // add more here, supply your own thumbnails!
+  ];
+  const caseGrid = document.getElementById('caseStudiesGrid');
+  function renderCaseStudies(){
+    caseGrid.innerHTML='';
+    caseStudies.forEach((cs,i)=>{
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `
+        <img src="${cs.thumbnail}" alt="">
+        <div class="project-title">${cs.title}</div>
+        <p class="project-description">${cs.description}</p>
+        <div class="author">Aashish Paudel</div>
+      `;
+      div.onclick = ()=>showCaseStudy(cs,i);
+      caseGrid.appendChild(div);
+    });
+  }
+  renderCaseStudies();
+
+  // PDF viewer for case study
+  let caseDoc = null, casePage = 1, currentCase = null;
+  const caseCanvas = document.getElementById('caseCanvas');
+  function showCaseStudy(cs){
+    currentCase = cs;
+    document.getElementById('caseDisplayBox').classList.remove('hidden');
+    document.getElementById('caseTitle').textContent = cs.title;
+    pdfjsLib.getDocument(cs.pdfUrl).promise.then(pdf => {
+      caseDoc = pdf; casePage = 1; renderCasePage(casePage);
+      document.getElementById('caseDownload').onclick = () => {
+        const a = document.createElement('a');
+        a.href = cs.pdfUrl; a.download = cs.pdfUrl.split('/').pop(); a.click();
+      };
+    });
+  }
+  function renderCasePage(num) {
+    caseDoc.getPage(num).then(page => {
+      const viewport = page.getViewport({ scale: 1.6 });
+      caseCanvas.width = viewport.width; caseCanvas.height = viewport.height;
+      page.render({canvasContext: caseCanvas.getContext('2d'), viewport});
+      document.getElementById('casePageInfo').textContent = `Page ${num} of ${caseDoc.numPages}`;
+    });
+  }
+  document.getElementById('casePrevPage').onclick = () => {
+    if(caseDoc && casePage>1){casePage--;renderCasePage(casePage);}
+  };
+  document.getElementById('caseNextPage').onclick = () => {
+    if(caseDoc && casePage<caseDoc.numPages){casePage++;renderCasePage(casePage);}
+  };
+
+  // ---- RESEARCH DATA / READER ----
+  const researchPapers = [
+    {
+      title: "An Exploratory Research Paper on Pricing Optimization",
+      description: "This paper explores pricing optimization methodologies in multi-channel settings.",
+      pdfUrl: "assets/research-papers/ResearchPaper.pdf",
+      thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?fit=crop&w=560&q=80"
+    }
+    // more papers here...
+  ];
+  const researchGrid = document.getElementById('researchGrid');
+  function renderResearchPapers(){
+    researchGrid.innerHTML='';
+    researchPapers.forEach((rp,i)=>{
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `
+        <img src="${rp.thumbnail}" alt="">
+        <div class="project-title">${rp.title}</div>
+        <p class="project-description">${rp.description}</p>
+        <div class="author">Aashish Paudel</div>
+      `;
+      div.onclick = ()=>showResearchPaper(rp,i);
+      researchGrid.appendChild(div);
+    });
+  }
+  renderResearchPapers();
+
+  // PDF viewer for research
+  let researchDoc = null, researchPage = 1, currentResearch = null;
+  const researchCanvas = document.getElementById('researchCanvas');
+  function showResearchPaper(rp){
+    currentResearch = rp;
+    document.getElementById('researchDisplayBox').classList.remove('hidden');
+    document.getElementById('researchTitle').textContent = rp.title;
+    pdfjsLib.getDocument(rp.pdfUrl).promise.then(pdf => {
+      researchDoc = pdf; researchPage = 1; renderResearchPage(researchPage);
+      document.getElementById('researchDownload').onclick = () => {
+        const a = document.createElement('a');
+        a.href = rp.pdfUrl; a.download = rp.pdfUrl.split('/').pop(); a.click();
+      };
+    });
+  }
+  function renderResearchPage(num) {
+    researchDoc.getPage(num).then(page => {
+      const viewport = page.getViewport({ scale: 1.6 });
+      researchCanvas.width = viewport.width; researchCanvas.height = viewport.height;
+      page.render({canvasContext: researchCanvas.getContext('2d'), viewport});
+      document.getElementById('researchPageInfo').textContent = `Page ${num} of ${researchDoc.numPages}`;
+    });
+  }
+  document.getElementById('researchPrevPage').onclick = () => {
+    if(researchDoc && researchPage>1){researchPage--;renderResearchPage(researchPage);}
+  };
+  document.getElementById('researchNextPage').onclick = () => {
+    if(researchDoc && researchPage<researchDoc.numPages){researchPage++;renderResearchPage(researchPage);}
+  };
+
+  // Resume as before
   let resumeDoc = null, resumePage = 1;
   const resumeCanvas = document.getElementById('resumeCanvas');
   function openResumePDF(url) {
@@ -233,45 +341,18 @@
     resumeDoc.getPage(num).then(page => {
       const viewport = page.getViewport({ scale: 1.6 });
       resumeCanvas.width = viewport.width; resumeCanvas.height = viewport.height;
-      page.render({ canvasContext: resumeCanvas.getContext('2d'), viewport });
+      page.render({canvasContext: resumeCanvas.getContext('2d'), viewport});
       document.getElementById('resumePageInfo').textContent = `Page ${num} of ${resumeDoc.numPages}`;
     });
   }
   document.getElementById('resumePrevPage').onclick = () => {
-    if(resumeDoc && resumePage>1) { resumePage--; renderResumePage(resumePage); }
+    if(resumeDoc && resumePage>1){resumePage--;renderResumePage(resumePage);}
   };
   document.getElementById('resumeNextPage').onclick = () => {
-    if(resumeDoc && resumePage<resumeDoc.numPages) { resumePage++; renderResumePage(resumePage);}
+    if(resumeDoc && resumePage<resumeDoc.numPages){resumePage++;renderResumePage(resumePage);}
   };
 
-  // ----- Case Study PDF
-  let caseDoc = null, casePage = 1;
-  const caseCanvas = document.getElementById('caseCanvas');
-  function openCasePDF(url) {
-    pdfjsLib.getDocument(url).promise.then(pdf => {
-      caseDoc = pdf; casePage = 1; renderCasePage(casePage);
-      document.getElementById('caseDownload').onclick = () => {
-        const a = document.createElement('a');
-        a.href = url; a.download = 'CaseStudy.pdf'; a.click();
-      };
-    });
-  }
-  function renderCasePage(num) {
-    caseDoc.getPage(num).then(page => {
-      const viewport = page.getViewport({ scale: 1.6 });
-      caseCanvas.width = viewport.width; caseCanvas.height = viewport.height;
-      page.render({ canvasContext: caseCanvas.getContext('2d'), viewport });
-      document.getElementById('casePageInfo').textContent = `Page ${num} of ${caseDoc.numPages}`;
-    });
-  }
-  document.getElementById('casePrevPage').onclick = () => {
-    if(caseDoc && casePage>1) { casePage--; renderCasePage(casePage); }
-  };
-  document.getElementById('caseNextPage').onclick = () => {
-    if(caseDoc && casePage<caseDoc.numPages) { casePage++; renderCasePage(casePage);}
-  };
-
-  // Initialize first tab
+  // Init
   openResumePDF('assets/resume/Resume.pdf');
 </script>
 </body>
