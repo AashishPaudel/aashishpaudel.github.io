@@ -8,138 +8,202 @@
   :root {
     --primary: #6558f5;
     --accent: #27c9ff;
-    --bg: #f2f4fb;
+    --bg: #f7f8fb;
     --card: #fff;
     --text: #222;
-    --muted: #606070;
-    --radius: 18px;
-    --shadow: 0 8px 26px rgba(101, 88, 245, 0.12);
+    --muted: #616161;
+    --radius: 20px;
+    --shadow: 0 12px 20px rgba(101, 88, 245, 0.08);
     --max-width: 1140px;
     font-family: 'Inter', sans-serif;
   }
-  body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px;}
-  a { color: var(--primary); text-decoration: none; font-weight: 600; }
-  a:hover { color: var(--accent);}
-  main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px;}
-  .tabs { display: flex; justify-content: center; gap: 30px; margin: 38px 0;}
-  .tab-button {
-    background: var(--card); color: var(--text); font-weight: 700;
-    font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
-    border: none; cursor: pointer; transition: all 0.25s;
-    box-shadow: 0 2px 10px rgba(101,88,245,0.05);
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
   }
-  .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
-  .tab-content { display: none; }
-  .tab-content.active { display: block;}
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover, a:focus {
+    color: var(--accent);
+    outline: none;
+  }
+  main {
+    max-width: var(--max-width);
+    margin: 48px auto;
+    padding: 0 20px;
+  }
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .tab-button {
+    background: var(--card);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 17px;
+    padding: 12px 38px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .tab-button:focus-visible {
+    outline: 3px solid var(--accent);
+  }
+  .tab-button.active,
+  .tab-button:hover {
+    background: var(--primary);
+    color: white;
+  }
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
-    gap: 30px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 36px;
   }
   .card {
     background: var(--card);
     border-radius: var(--radius);
+    padding: 24px;
     box-shadow: var(--shadow);
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
     cursor: pointer;
-    user-select: none;
-    transition: box-shadow 0.3s ease;
-    position: relative;
+    transition: box-shadow 0.25s ease;
+    height: 100%;
   }
-  .card:hover { box-shadow: 0 14px 40px var(--primary);}
+  .card:hover, .card:focus-within {
+    box-shadow: 0 20px 40px rgba(101, 88, 245, 0.15);
+  }
   .card img.thumbnail {
     width: 100%;
-    border-radius: 14px;
-    margin-bottom: 14px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  }
-  .project-title { font-weight: 800; font-size: 20px; margin: 0 0 10px 0; color: var(--primary);}
-  .project-description { font-size: 14px; color: var(--muted); line-height: 1.4; margin-bottom: 10px;}
-  .author { font-size: 12px; color: var(--muted);}
-  .pdf-viewer {
-    width: 100%;
-    height: 550px;
-    overflow: auto;
-    background: #f9f9fb;
+    aspect-ratio: 16/9;
+    object-fit: cover;
     border-radius: var(--radius);
-    box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+    margin-bottom: 18px;
   }
-  .pdf-canvas {
+  .project-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--primary);
+    margin: 0 0 12px 0;
+  }
+  .project-description {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-bottom: 12px;
+    flex-grow: 1;
+  }
+  .author {
+    font-size: 12px;
+    font-family: monospace;
+    color: var(--muted);
+  }
+  .pdf-viewer {
+    background: #fbfcfd;
+    border-radius: var(--radius);
+    padding: 24px;
+    max-width: 900px;
+    margin: 0 auto 48px;
+    box-shadow: 0 16px 36px rgba(101, 88, 245, 0.1);
+  }
+  canvas.pdf-canvas {
     width: 100% !important;
     height: auto !important;
-    border-radius: var(--radius);
-    display: block;
-    margin: 0 auto;
+    border-radius: 14px;
+    box-shadow: 0 5px 16px rgba(0,0,0,0.06);
   }
   .pdf-controls {
-    margin-top: 8px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 14px;
+    gap: 16px;
   }
   .pdf-controls button {
     background: var(--primary);
-    color: white;
-    padding: 10px 24px;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
+    padding: 12px 28px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
+    color: white;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
   }
   .pdf-controls button:disabled {
-    background: #b3a9f5;
+    background: #cfcbfa;
     cursor: not-allowed;
   }
   .page-info {
-    margin-left: auto;
-    font-weight: 600;
-    color: var(--muted);
-    line-height: 2;
-    padding: 4px 12px;
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-muted);
   }
   .info-row {
     display: flex;
     gap: 40px;
     flex-wrap: wrap;
-    margin-top: 60px;
+    margin-top: 80px;
   }
   .info-card {
-    flex: 1 1 320px;
-    min-width: 260px;
     background: var(--card);
-    padding: 30px 24px;
+    padding: 32px 28px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    flex: 1 1 320px;
+    min-width: 260px;
   }
   .info-card h3 {
     color: var(--primary);
     margin-top: 0;
-    margin-bottom: 14px;
+    margin-bottom: 24px;
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: 0.02em;
   }
   .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 14px;
   }
   .skill-tag {
     background: var(--primary);
     color: white;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 999px;
-    font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     user-select: none;
+    font-size: 14px;
   }
   .education ul {
-    color: var(--muted);
-    font-size: 15.5px;
     padding-left: 18px;
+    font-size: 16px;
+    color: var(--muted);
   }
   .education li {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     line-height: 1.7;
   }
   footer {
@@ -147,19 +211,22 @@
     color: white;
     text-align: center;
     font-weight: 700;
-    padding: 28px 10px 14px 10px;
+    padding: 32px 12px;
     border-radius: var(--radius) var(--radius) 0 0;
-    margin-top: 80px;
+    margin-top: 100px;
   }
-  @media (max-width: 950px) {
+  @media (max-width: 850px) {
     .info-row {
       flex-direction: column;
-      gap: 22px;
+      gap: 28px;
     }
-  }
-  @media (max-width: 650px) {
     .cards-grid {
       grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .pdf-viewer {
+      max-width: 100%;
+      padding: 24px 12px;
     }
   }
 </style>
@@ -167,11 +234,9 @@
 </head>
 <body>
 <main>
-  <section style="text-align: center; margin-bottom: 44px;">
-    <h2 style="font-size: 36px; color: var(--primary); font-weight:900;">Hi 👋, I'm Aashish</h2>
-    <p style="font-size: 19px; color:var(--muted); max-width:700px;margin:16px auto 0;">
-      I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
-    </p>
+  <section style="text-align: center; margin-bottom: 50px;">
+    <h2 style="font-size: 36px; color: var(--primary); font-weight: 900;">Hi 👋, I'm Aashish</h2>
+    <p style="font-size: 20px; color: var(--muted); max-width: 700px; margin: 16px auto 0;">I build financial strategies with data-driven insights, pricing strategy, and research backed by academic and industry projects.</p>
   </section>
 
   <div class="tabs" role="tablist">
@@ -181,17 +246,16 @@
     <button class="tab-button" data-tab="researchPapers">Research Papers</button>
   </div>
 
-  <!-- Tableau Projects -->
   <section id="projects" class="tab-content active">
-    <h3 style="color:var(--primary)">Tableau Projects</h3>
+    <h3 style="color: var(--primary);">Tableau Projects</h3>
     <div class="cards-grid">
-      <div class="card" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/BicycleShop_17412757649010/Dashboard1', '_blank')">
+      <div class="card" tabindex="0" role="link" aria-label="Open Bicycle Shop Tableau Project" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/BicycleShop_17412757649010/Dashboard1', '_blank')">
         <img class="thumbnail" src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
         <div class="project-title">Bicycle Shop</div>
         <p class="project-description">An interactive sales/revenue dashboard for a cycle retailer, highlighting KPIs and year-on-year trends.</p>
         <div class="author">Aashish Paudel</div>
       </div>
-      <div class="card" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/KingCountyHouseSales_16941785675300/KingCountyHouseSales', '_blank')">
+      <div class="card" tabindex="0" role="link" aria-label="Open King County House Sales Tableau Project" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/KingCountyHouseSales_16941785675300/KingCountyHouseSales', '_blank')">
         <img class="thumbnail" src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales_16941785675300/KingCountyHouseSales/1.png" alt="King County House Sales" />
         <div class="project-title">King County House Sales</div>
         <p class="project-description">An advanced dashboard to visualize and filter property prices, market activity, and regional heatmaps for King County, Washington.</p>
@@ -200,37 +264,33 @@
     </div>
   </section>
 
-  <!-- Resume -->
   <section id="resume" class="tab-content">
-    <div class="pdf-viewer-box" id="resumeViewerBox" style="display:flex; flex-direction:column; align-items:center;">
-      <h3 style="color:var(--primary); margin-top:0;">Resume</h3>
-      <canvas id="resumeCanvas" class="pdf-canvas"></canvas>
+    <div class="pdf-viewer" aria-label="Resume PDF Viewer">
+      <h3 style="color: var(--primary); margin-top: 0;">Resume</h3>
+      <canvas id="resumeCanvas" class="pdf-canvas" role="document" aria-live="polite" aria-atomic="true"></canvas>
       <div class="pdf-controls">
-        <button id="resumePrevPage">Previous</button>
-        <button id="resumeNextPage">Next</button>
-        <button id="resumeDownload">Download PDF</button>
+        <button id="resumePrevPage" aria-label="Previous Page">Previous</button>
+        <button id="resumeNextPage" aria-label="Next Page">Next</button>
+        <button id="resumeDownload" aria-label="Download Resume PDF">Download PDF</button>
       </div>
-      <div id="resumePageInfo" class="page-info"></div>
+      <div id="resumePageInfo" class="page-info" aria-live="polite"></div>
     </div>
   </section>
 
-  <!-- Case Studies -->
   <section id="caseStudies" class="tab-content">
-    <h3 style="color:var(--primary); margin-bottom: 20px;">Case Studies</h3>
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Case Studies</h3>
     <div class="cards-grid" id="caseStudiesGrid"></div>
   </section>
 
-  <!-- Research Papers -->
   <section id="researchPapers" class="tab-content">
-    <h3 style="color:var(--primary); margin-bottom: 20px;">Research Papers</h3>
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Research Papers</h3>
     <div class="cards-grid" id="researchGrid"></div>
   </section>
 
-  <!-- Skills & Education -->
   <div class="info-row" id="education-section">
     <div class="info-card skills">
       <h3>Skills</h3>
-      <div class="skill-tags">
+      <div class="skill-tags" aria-label="My skills">
         <span class="skill-tag">Python (Pandas)</span>
         <span class="skill-tag">SQL</span>
         <span class="skill-tag">Tableau</span>
@@ -256,21 +316,22 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Tabs
+  // Tab switching
   const tabs = document.querySelectorAll('.tab-button');
   const tabContents = document.querySelectorAll('.tab-content');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
-      tabContents.forEach(tc => tc.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab).classList.add('active');
-      // Reload PDF on show of Resume tab
-      if(tab.dataset.tab === 'resume') openResumePDF('assets/resume/Resume.pdf');
+      if (tab.dataset.tab === 'resume') {
+        openResumePDF('assets/resume/Resume.pdf');
+      }
     });
   });
 
-  // Case studies data
+  // Data for case studies
   const caseStudies = [
     {
       title: 'Pricing & Channel Strategy',
@@ -280,7 +341,7 @@
     }
   ];
 
-  // Research papers data
+  // Data for research papers
   const researchPapers = [
     {
       title: 'Pricing Optimization Paper',
@@ -290,129 +351,119 @@
     }
   ];
 
-  // Render case studies and research papers grids
+  // Render thumbnails in grids
   const caseGrid = document.getElementById('caseStudiesGrid');
   const researchGrid = document.getElementById('researchGrid');
 
-  function renderCards(container, items, clickHandler) {
+  function renderGrid(container, items, clickHandler) {
     container.innerHTML = '';
-    items.forEach((item, idx) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img class="thumbnail" src="${item.thumbnail}" alt="${item.title}" />
+    items.forEach((item, index) => {
+      const c = document.createElement('div');
+      c.className = 'card';
+      c.tabIndex = 0;
+      c.role = 'button';
+      c.ariaLabel = `${item.title} - Click to view detailed document`;
+      c.innerHTML = `
+        <img src="${item.thumbnail}" class="thumbnail" alt="${item.title}" />
         <div class="project-title">${item.title}</div>
         <p class="project-description">${item.description}</p>
         <div class="author">Aashish Paudel</div>
       `;
-      card.addEventListener('click', () => clickHandler(item, card));
-      container.appendChild(card);
+      c.addEventListener('click', () => {
+        expandCard(container, item, index);
+      });
+      container.appendChild(c);
     });
   }
 
-  let expandedCard = null;
-  let currentPdfDoc = null;
-  let currentPage = 1;
-  let currentCanvas = null;
+  // Current expanded card info
+  let expanded = {
+    container: null,
+    canvas: null,
+    pdfDoc: null,
+    pageNum: 1
+  };
 
-  function clickCardToExpand(item, card) {
-    // Contract previously expanded card
-    if (expandedCard && expandedCard !== card) contractCard(expandedCard);
-
-    // If clicked card already expanded, contract it, else expand
-    if (expandedCard === card) {
-      contractCard(card);
+  // Expand card to show PDF viewer
+  function expandCard(container, item, index) {
+    if (expanded.container === container) {
+      // Contract the same card - refresh grid with thumbnails
+      renderGrid(container, container === caseGrid ? caseStudies : researchPapers, expandCard);
+      expanded.container = null;
       return;
     }
+    // Otherwise, render PDF inside a fresh card replacing the grid
+    container.innerHTML = '';
+    const viewer = document.createElement('div');
+    viewer.className = 'pdf-viewer';
+    viewer.setAttribute('tabindex', '0');
 
-    expandCard(card, item.pdfUrl, item.title);
-    expandedCard = card;
-  }
-
-  function expandCard(card, pdfUrl, title) {
-    card.classList.add('expanded');
-    card.innerHTML = `
-      <h4>${title}</h4>
-      <canvas id="pdfCanvasExpanded" class="pdf-canvas"></canvas>
+    viewer.innerHTML = `
+      <h3 style="color: var(--primary);">${item.title}</h3>
+      <canvas id="expandedPdfCanvas" class="pdf-canvas" role="document"></canvas>
       <div class="pdf-controls">
-        <button id="prevPdfPage">Previous</button>
-        <button id="nextPdfPage">Next</button>
-        <button id="downloadPdf">Download PDF</button>
+        <button id="expandedPrev">Previous</button>
+        <button id="expandedNext">Next</button>
+        <button id="expandedDownload">Download PDF</button>
       </div>
-      <div id="pdfPageInfo" class="page-info"></div>
+      <div id="expandedPageInfo" class="page-info"></div>
     `;
+    container.appendChild(viewer);
+    expanded.container = container;
 
-    currentCanvas = card.querySelector('canvas');
-    renderPDF(pdfUrl);
+    const canvas = viewer.querySelector('canvas');
+    const prevBtn = viewer.querySelector('#expandedPrev');
+    const nextBtn = viewer.querySelector('#expandedNext');
+    const downloadBtn = viewer.querySelector('#expandedDownload');
+    const pageInfo = viewer.querySelector('#expandedPageInfo');
 
-    card.querySelector('#prevPdfPage').addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderPage(currentPage);
+    pdfjsLib.getDocument(item.pdfUrl).promise.then(pdfDoc => {
+      expanded.pdfDoc = pdfDoc;
+      expanded.pageNum = 1;
+      renderPage();
+
+      function renderPage() {
+        pdfDoc.getPage(expanded.pageNum).then(page => {
+          const viewport = page.getViewport({ scale: 1.6 });
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          page.render({ canvasContext: canvas.getContext('2d'), viewport });
+          pageInfo.textContent = `Page ${expanded.pageNum} of ${pdfDoc.numPages}`;
+          prevBtn.disabled = expanded.pageNum <= 1;
+          nextBtn.disabled = expanded.pageNum >= pdfDoc.numPages;
+        });
       }
-    });
 
-    card.querySelector('#nextPdfPage').addEventListener('click', () => {
-      if (currentPage < currentPdfDoc.numPages) {
-        currentPage++;
-        renderPage(currentPage);
-      }
-    });
-
-    card.querySelector('#downloadPdf').addEventListener('click', () => {
-      const a = document.createElement('a');
-      a.href = pdfUrl;
-      a.download = pdfUrl.split('/').pop();
-      a.click();
-    });
-  }
-
-  function contractCard(card) {
-    card.classList.remove('expanded');
-    const title = card.querySelector('h4')?.textContent || '';
-    // Refresh the content to re-render thumbnail again depending on case or research
-    let items = (card.parentNode.id === 'caseStudiesGrid') ? caseStudies : researchPapers;
-    const idx = items.findIndex(i => i.title === title);
-    if (idx !== -1) {
-      card.innerHTML = `
-        <img class="thumbnail" src="${items[idx].thumbnail}" alt="${items[idx].title}" />
-        <div class="project-title">${items[idx].title}</div>
-        <p class="project-description">${items[idx].description}</p>
-        <div class="author">Aashish Paudel</div>
-      `;
-    }
-    expandedCard = null;
-  }
-
-  // Render PDF and manage rendering
-  function renderPDF(url) {
-    pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-      currentPdfDoc = pdfDoc_;
-      currentPage = 1;
-      renderPage(currentPage);
+      prevBtn.onclick = () => {
+        if (expanded.pageNum > 1) {
+          expanded.pageNum--;
+          renderPage();
+        }
+      };
+      nextBtn.onclick = () => {
+        if (expanded.pageNum < pdfDoc.numPages) {
+          expanded.pageNum++;
+          renderPage();
+        }
+      };
+      downloadBtn.onclick = () => {
+        const a = document.createElement('a');
+        a.href = item.pdfUrl;
+        a.download = item.pdfUrl.split('/').pop();
+        a.click();
+      };
     });
   }
 
-  function renderPage(num) {
-    currentPdfDoc.getPage(num).then(page => {
-      const viewport = page.getViewport({ scale: 1.4 });
-      currentCanvas.width = viewport.width;
-      currentCanvas.height = viewport.height;
-      page.render({ canvasContext: currentCanvas.getContext('2d'), viewport });
-      document.getElementById('pdfPageInfo').textContent = `Page ${num} of ${currentPdfDoc.numPages}`;
-    });
-  }
-
-  // Resume canvas controls (fixed display)
+  // Resume PDF controls
   const resumeCanvas = document.getElementById('resumeCanvas');
   let resumeDoc = null;
   let resumePage = 1;
-
   function openResumePDF(url) {
     pdfjsLib.getDocument(url).promise.then(pdf => {
       resumeDoc = pdf;
       resumePage = 1;
-      renderResumePage(resumePage);
+      renderResumePage();
       document.getElementById('resumeDownload').onclick = () => {
         const a = document.createElement('a');
         a.href = url;
@@ -421,25 +472,25 @@
       };
     });
   }
-  function renderResumePage(num) {
-    resumeDoc.getPage(num).then(page => {
+  function renderResumePage() {
+    resumeDoc.getPage(resumePage).then(page => {
       const viewport = page.getViewport({ scale: 1.6 });
       resumeCanvas.width = viewport.width;
       resumeCanvas.height = viewport.height;
       page.render({ canvasContext: resumeCanvas.getContext('2d'), viewport });
-      document.getElementById('resumePageInfo').textContent = `Page ${num} of ${resumeDoc.numPages}`;
+      document.getElementById('resumePageInfo').textContent = `Page ${resumePage} of ${resumeDoc.numPages}`;
     });
   }
   document.getElementById('resumePrevPage').onclick = () => {
-    if (resumeDoc && resumePage > 1) { resumePage--; renderResumePage(resumePage); }
+    if (resumeDoc && resumePage > 1) { resumePage--; renderResumePage(); }
   };
   document.getElementById('resumeNextPage').onclick = () => {
-    if (resumeDoc && resumePage < resumeDoc.numPages) { resumePage++; renderResumePage(resumePage); }
+    if (resumeDoc && resumePage < resumeDoc.numPages) { resumePage++; renderResumePage(); }
   };
 
-  // On load, render cards and open resume PDF by default
-  renderCards(caseGrid, caseStudies, clickCardToExpand);
-  renderCards(researchGrid, researchPapers, clickCardToExpand);
+  // Initialize grids and open resume PDF
+  renderGrid(caseGrid, caseStudies, expandCard);
+  renderGrid(researchGrid, researchPapers, expandCard);
   openResumePDF('assets/resume/Resume.pdf');
 </script>
 </body>
