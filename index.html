@@ -36,6 +36,7 @@
   .tab-buttons{ display:flex; gap:8px; margin:12px 0; }
   .tab-btn{ background:var(--glass); border:none; padding:8px 14px; border-radius:8px; color:var(--muted); cursor:pointer; font-weight:600; }
   .tab-btn.active{ background:var(--accent); color:white; }
+
   .tab-panel{ display:none; }
   .tab-panel.active{ display:block; }
 
@@ -127,7 +128,7 @@
                 <div class="thumb">CS</div>
                 <div>
                   <p class="proj-title">
-                    <a href="javascript:void(0);" onclick="openPDF('https://yourusername.github.io/your-repo/assets/case-studies/CaseStudy4.pdf')">
+                    <a href="javascript:void(0);" onclick="openPDF('assets/case-studies/CaseStudy4.pdf')">
                       Pricing and Channel Strategy Analysis for Premium Product 
                     </a>
                   </p>
@@ -230,9 +231,11 @@
     </footer>
   </div>
 
+  <!-- PDF Modal -->
   <div id="pdfModal">
     <div id="pdfModalContent">
-      <span onclick="closePDF()" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px; font-weight:bold; color:#333;">&times;</span>
+      <span onclick="closePDF()" 
+            style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px; font-weight:bold; color:#333;">&times;</span>
       <canvas id="pdfCanvas"></canvas>
       <div id="pdfControls">
         <button onclick="prevPage()">Previous</button>
@@ -258,7 +261,7 @@
     });
   });
 
-  // PDF.js variables
+  // PDF.js setup
   let pdfDoc = null;
   let pageNum = 1;
   const canvas = document.getElementById("pdfCanvas");
@@ -270,7 +273,7 @@
       pdfDoc = pdf;
       pageNum = 1;
       renderPage(pageNum);
-    }).catch((error) => {
+    }).catch(error => {
       alert('Error loading PDF: ' + error.message);
       closePDF();
     });
@@ -281,13 +284,11 @@
       const viewport = page.getViewport({ scale: 1.2 });
       canvas.height = viewport.height;
       canvas.width = viewport.width;
-
       const renderCtx = {
         canvasContext: ctx,
         viewport: viewport
       };
       page.render(renderCtx);
-
       document.getElementById("pageInfo").innerText = `Page ${num} of ${pdfDoc.numPages}`;
     });
   }
