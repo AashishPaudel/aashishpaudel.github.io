@@ -3,84 +3,221 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Aashish Paudel — Finance & Data Portfolio</title>
+<title>Aashish Paudel — Portfolio</title>
 <style>
-  :root {
-    --primary: #6558f5;
-    --accent: #27c9ff;
-    --bg: #f2f4fb;
-    --card: #fff;
-    --text: #222;
-    --muted: #606070;
-    --radius: 18px;
-    --shadow: 0 8px 26px rgba(101, 88, 245, 0.12);
-    --max-width: 1140px;
-    font-family: 'Inter', sans-serif;
+:root {
+  --primary: #6558f5;
+  --accent: #27c9ff;
+  --bg: #f2f4fb;
+  --card: #fff;
+  --text: #222;
+  --muted: #606070;
+  --radius: 18px;
+  --shadow: 0 8px 26px rgba(101, 88, 245, 0.12);
+  --max-width: 1140px;
+  font-family: 'Inter', sans-serif;
+}
+body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+}
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+a:hover {
+  color: var(--accent);
+}
+main {
+  max-width: var(--max-width);
+  margin: 36px auto;
+  padding: 0 20px;
+}
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 36px 0;
+}
+.tab-button {
+  padding: 13px 36px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(101, 88, 245, 0.05);
+  color: var(--text);
+  transition: all 0.25s;
+}
+.tab-button.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow);
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 30px;
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+.card:hover {
+  box-shadow: 0 14px 40px var(--primary);
+}
+.card.expanded {
+  grid-column: 1 / -1;
+  cursor: default;
+  padding: 24px 32px;
+}
+.card img.thumbnail {
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.project-title {
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--primary);
+  margin: 0 0 12px 0;
+}
+.project-description {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.author {
+  font-size: 12px;
+  color: var(--muted);
+}
+.pdf-viewer {
+  width: 100%;
+  height: 650px;
+  overflow: auto;
+  background: #f9f9fb;
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+}
+.pdf-canvas {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: var(--radius);
+  display: block;
+  margin: 0 auto;
+}
+.pdf-controls {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.pdf-controls button {
+  background: var(--primary);
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.pdf-controls button:disabled {
+  background: #b3a9f5;
+  cursor: not-allowed;
+}
+.page-info {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 2;
+}
+.info-row {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 60px;
+}
+.info-card {
+  flex: 1 1 320px;
+  min-width: 260px;
+  background: var(--card);
+  padding: 30px 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.info-card h3 {
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.skill-tag {
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  user-select: none;
+}
+.education ul {
+  color: var(--muted);
+  font-size: 15.5px;
+  padding-left: 18px;
+}
+.education li {
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+footer {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  padding: 28px 10px 14px 10px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  margin-top: 80px;
+}
+@media (max-width: 950px) {
+  .info-row {
+    flex-direction: column;
+    gap: 22px;
   }
-  body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px;}
-  a { color: var(--primary); text-decoration: none; font-weight: 600; }
-  a:hover { color: var(--accent);}
-  main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px;}
-  .tabs { display: flex; justify-content: center; gap: 34px; margin: 38px 0;}
-  .tab-button {
-    background: var(--card); color: var(--text); font-weight: 700;
-    font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
-    border: none; cursor: pointer; transition: all 0.25s;
-    box-shadow: 0 2px 10px rgba(101,88,245,0.05);}
-  .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
-  .tab-content { display: none; }
-  .tab-content.active { display: block;}
+}
+@media (max-width: 650px) {
   .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
-    gap: 38px;
-    margin-bottom: 24px;
+    grid-template-columns: 1fr;
   }
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 22px 22px 17px 22px;
-    display: flex; flex-direction: column; align-items: flex-start;
-    transition: box-shadow 0.2s; cursor: pointer;
+  .card.expanded {
+    grid-column: auto;
   }
-  .card:hover { box-shadow: 0 12px 38px var(--primary);}
-  .card img { border-radius: 12px; width:100%; margin-bottom: 16px; object-fit: cover;}
-  .project-title { font-weight: bold; font-size: 20px; margin-top: 2px; color: var(--primary);}
-  .project-description { font-size: 14px; color: var(--muted); margin-bottom: 0;}
-  .author { color: var(--muted); font-size: 13px; margin-bottom: 6px;}
-  .pdf-viewer-box {
-    margin: 0 auto 0 auto; background: #fff; border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 34px 16px; width:900px; max-width: 100%; margin-bottom:40px;
-  }
-  .pdf-viewer-box.hidden { display:none; }
-  .pdf-viewer-box h3 { color:var(--primary);}
-  canvas { display:block; margin: 0 auto 8px auto; border-radius: 8px; width:100%; height:auto; background:#f8f8fb;}
-  .pdf-controls { display: flex; justify-content: center; gap: 14px; margin-top: 8px;}
-  .pdf-controls button {
-    background: var(--primary); color:#fff; padding:10px 20px; border:none;
-    border-radius: 8px; font-weight:700; font-size:15px; cursor:pointer;}
-  .pdf-controls button:disabled { background: #c2baff;}
-  .page-info { float: right; color: var(--muted); font-weight: bold; font-size: 14px; margin: 9px 0;}
-  .info-row { display: flex; gap:40px; flex-wrap: wrap; margin-top: 60px; }
-  .info-card { flex:1 1 320px; min-width:260px; background: #fff;
-    padding: 30px 24px; border-radius: var(--radius); box-shadow: var(--shadow);}
-  .info-card h3 { color: var(--primary); margin-top: 0;}
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 12px;}
-  .skill-tag { background: var(--primary); color:#fff; padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 600;}
-  .education ul { color: var(--muted); font-size: 15.5px; padding-left: 18px;}
-  .education li { margin-bottom: 12px; line-height: 1.7;}
-  @media (max-width: 950px) {
-    .info-row { flex-direction: column; gap:22px;}
-    .pdf-viewer-box { padding:17px 0; font-size: 15px;}
-    canvas { max-width: 98vw;}
-  }
-  @media (max-width: 600px) {
-    main { padding: 0 4vw;}
-    .card { padding: 10px;}
-    .info-card { padding: 8px;}
-  }
-  footer { background: var(--primary); color: #fff; text-align: center; font-weight: 700; padding: 28px 10px 14px 10px; border-radius: var(--radius) var(--radius) 0 0; margin-top: 80px;}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
 </head>
@@ -92,36 +229,38 @@
       I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
     </p>
   </section>
+  
   <div class="tabs" role="tablist">
     <button class="tab-button active" data-tab="projects">Projects</button>
     <button class="tab-button" data-tab="resume">Resume</button>
     <button class="tab-button" data-tab="caseStudies">Case Studies</button>
-    <button class="tab-button" data-tab="researchPapers">Research Paper</button>
+    <button class="tab-button" data-tab="researchPapers">Research Papers</button>
   </div>
+  
   <!-- Projects -->
   <section id="projects" class="tab-content active">
     <h3 style="color:var(--primary)">Tableau Projects</h3>
     <div class="cards-grid">
       <div class="card" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/BicycleShop_17412757649010/Dashboard1', '_blank')">
-        <img src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
+        <img class="thumbnail" src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
         <div class="project-title">Bicycle Shop</div>
         <p class="project-description">An interactive sales/revenue dashboard for a cycle retailer, highlighting KPIs and year-on-year trends.</p>
         <div class="author">Aashish Paudel</div>
       </div>
       <div class="card" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/KingCountyHouseSales_16941785675300/KingCountyHouseSales', '_blank')">
-        <img src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales_16941785675300/KingCountyHouseSales/1.png" alt="King County House Sales" />
+        <img class="thumbnail" src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales_16941785675300/KingCountyHouseSales/1.png" alt="King County House Sales" />
         <div class="project-title">King County House Sales</div>
         <p class="project-description">An advanced dashboard to visualize and filter property prices, market activity, and regional heatmaps for King County, Washington.</p>
         <div class="author">Aashish Paudel</div>
       </div>
     </div>
   </section>
-
-  <!-- Resume as before -->
+  
+  <!-- Resume -->
   <section id="resume" class="tab-content">
     <div class="pdf-viewer-box">
       <h3 style="color:var(--primary); margin-top:0;">Resume</h3>
-      <canvas id="resumeCanvas"></canvas>
+      <canvas id="resumeCanvas" class="pdf-canvas"></canvas>
       <div class="pdf-controls">
         <button id="resumePrevPage">Previous</button>
         <button id="resumeNextPage">Next</button>
@@ -130,39 +269,19 @@
       <div id="resumePageInfo" class="page-info"></div>
     </div>
   </section>
-
+  
   <!-- Case Studies -->
   <section id="caseStudies" class="tab-content">
-    <h3 style="color:var(--primary);margin-bottom:20px;">Case Studies</h3>
+    <h3 style="color:var(--primary); margin-bottom: 20px;">Case Studies</h3>
     <div class="cards-grid" id="caseStudiesGrid"></div>
-    <div id="caseDisplayBox" class="pdf-viewer-box hidden">
-      <h3 style="color:var(--primary); margin-top:0;" id="caseTitle"></h3>
-      <canvas id="caseCanvas"></canvas>
-      <div class="pdf-controls">
-        <button id="casePrevPage">Previous</button>
-        <button id="caseNextPage">Next</button>
-        <button id="caseDownload">Download PDF</button>
-      </div>
-      <div id="casePageInfo" class="page-info"></div>
-    </div>
   </section>
-
+  
   <!-- Research Papers -->
   <section id="researchPapers" class="tab-content">
-    <h3 style="color:var(--primary);margin-bottom:20px;">Research Papers</h3>
+    <h3 style="color:var(--primary); margin-bottom: 20px;">Research Papers</h3>
     <div class="cards-grid" id="researchGrid"></div>
-    <div id="researchDisplayBox" class="pdf-viewer-box hidden">
-      <h3 style="color:var(--primary); margin-top:0;" id="researchTitle"></h3>
-      <canvas id="researchCanvas"></canvas>
-      <div class="pdf-controls">
-        <button id="researchPrevPage">Previous</button>
-        <button id="researchNextPage">Next</button>
-        <button id="researchDownload">Download PDF</button>
-      </div>
-      <div id="researchPageInfo" class="page-info"></div>
-    </div>
   </section>
-
+  
   <!-- Skills & Education row -->
   <div class="info-row" id="education-section">
     <div class="info-card skills">
@@ -187,173 +306,150 @@
     </div>
   </div>
 </main>
-<footer>
-  © <span id="year"></span> Aashish Paudel — Financial Analytics Portfolio
-</footer>
+
+<footer>© <span id="year"></span> Aashish Paudel — Financial Analytics Portfolio</footer>
+
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Tab switcher
+  // Tab navigation
   const tabs = document.querySelectorAll('.tab-button');
-  const tabsContent = document.querySelectorAll('.tab-content');
-  tabs.forEach(btn => {
-    btn.onclick = () => {
-      tabs.forEach(b => b.classList.remove('active'));
-      tabsContent.forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab).classList.add('active');
-      // Reset all pdf viewer visibility
-      if(btn.dataset.tab==='caseStudies'){document.getElementById('caseDisplayBox').classList.add('hidden');}
-      if(btn.dataset.tab==='researchPapers'){document.getElementById('researchDisplayBox').classList.add('hidden');}
-      if(btn.dataset.tab==='resume') openResumePDF('assets/resume/Resume.pdf');
-    }
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(tc => tc.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
   });
 
-  // ---- CASE STUDY DATA / DYNAMIC THUMBNAILS -----
+  // Case Studies & Research data arrays example
   const caseStudies = [
     {
-      title: "Pricing and Channel Strategy Analysis for Premium Product",
-      description: "Detailed analysis of pricing and channel impacts on premium product margin and strategy.",
-      pdfUrl: "assets/case-studies/CaseStudy4.pdf",
-      thumbnail: "https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=560&q=80"
+      title: 'Pricing & Channel Strategy',
+      description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
+      pdfUrl: 'assets/case-studies/CaseStudy4.pdf',
+      thumbnail: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=560&q=80'
     }
-    // add more here, supply your own thumbnails!
+    // Add more case studies here
   ];
-  const caseGrid = document.getElementById('caseStudiesGrid');
-  function renderCaseStudies(){
-    caseGrid.innerHTML='';
-    caseStudies.forEach((cs,i)=>{
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.innerHTML = `
-        <img src="${cs.thumbnail}" alt="">
-        <div class="project-title">${cs.title}</div>
-        <p class="project-description">${cs.description}</p>
-        <div class="author">Aashish Paudel</div>
-      `;
-      div.onclick = ()=>showCaseStudy(cs,i);
-      caseGrid.appendChild(div);
-    });
-  }
-  renderCaseStudies();
-
-  // PDF viewer for case study
-  let caseDoc = null, casePage = 1, currentCase = null;
-  const caseCanvas = document.getElementById('caseCanvas');
-  function showCaseStudy(cs){
-    currentCase = cs;
-    document.getElementById('caseDisplayBox').classList.remove('hidden');
-    document.getElementById('caseTitle').textContent = cs.title;
-    pdfjsLib.getDocument(cs.pdfUrl).promise.then(pdf => {
-      caseDoc = pdf; casePage = 1; renderCasePage(casePage);
-      document.getElementById('caseDownload').onclick = () => {
-        const a = document.createElement('a');
-        a.href = cs.pdfUrl; a.download = cs.pdfUrl.split('/').pop(); a.click();
-      };
-    });
-  }
-  function renderCasePage(num) {
-    caseDoc.getPage(num).then(page => {
-      const viewport = page.getViewport({ scale: 1.6 });
-      caseCanvas.width = viewport.width; caseCanvas.height = viewport.height;
-      page.render({canvasContext: caseCanvas.getContext('2d'), viewport});
-      document.getElementById('casePageInfo').textContent = `Page ${num} of ${caseDoc.numPages}`;
-    });
-  }
-  document.getElementById('casePrevPage').onclick = () => {
-    if(caseDoc && casePage>1){casePage--;renderCasePage(casePage);}
-  };
-  document.getElementById('caseNextPage').onclick = () => {
-    if(caseDoc && casePage<caseDoc.numPages){casePage++;renderCasePage(casePage);}
-  };
-
-  // ---- RESEARCH DATA / READER ----
   const researchPapers = [
     {
-      title: "An Exploratory Research Paper on Pricing Optimization",
-      description: "This paper explores pricing optimization methodologies in multi-channel settings.",
-      pdfUrl: "assets/research-papers/ResearchPaper.pdf",
-      thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?fit=crop&w=560&q=80"
+      title: 'Pricing Optimization Paper',
+      description: 'Research paper on pricing optimization methodologies.',
+      pdfUrl: 'assets/research-papers/ResearchPaper.pdf',
+      thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?fit=crop&w=560&q=80'
     }
-    // more papers here...
+    // Add more research papers here
   ];
+
+  // Render cards dynamically
+  const caseGrid = document.getElementById('caseStudiesGrid');
   const researchGrid = document.getElementById('researchGrid');
-  function renderResearchPapers(){
-    researchGrid.innerHTML='';
-    researchPapers.forEach((rp,i)=>{
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.innerHTML = `
-        <img src="${rp.thumbnail}" alt="">
-        <div class="project-title">${rp.title}</div>
-        <p class="project-description">${rp.description}</p>
+
+  function renderCards(container, items, onClick){
+    container.innerHTML = '';
+    items.forEach(item=>{
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img class="thumbnail" src="${item.thumbnail}" alt="${item.title}">
+        <div class="project-title">${item.title}</div>
+        <p class="project-description">${item.description}</p>
         <div class="author">Aashish Paudel</div>
       `;
-      div.onclick = ()=>showResearchPaper(rp,i);
-      researchGrid.appendChild(div);
+      card.addEventListener('click', ()=> onClick(item, card));
+      container.appendChild(card);
     });
   }
-  renderResearchPapers();
 
-  // PDF viewer for research
-  let researchDoc = null, researchPage = 1, currentResearch = null;
-  const researchCanvas = document.getElementById('researchCanvas');
-  function showResearchPaper(rp){
-    currentResearch = rp;
-    document.getElementById('researchDisplayBox').classList.remove('hidden');
-    document.getElementById('researchTitle').textContent = rp.title;
-    pdfjsLib.getDocument(rp.pdfUrl).promise.then(pdf => {
-      researchDoc = pdf; researchPage = 1; renderResearchPage(researchPage);
-      document.getElementById('researchDownload').onclick = () => {
-        const a = document.createElement('a');
-        a.href = rp.pdfUrl; a.download = rp.pdfUrl.split('/').pop(); a.click();
-      };
-    });
-  }
-  function renderResearchPage(num) {
-    researchDoc.getPage(num).then(page => {
-      const viewport = page.getViewport({ scale: 1.6 });
-      researchCanvas.width = viewport.width; researchCanvas.height = viewport.height;
-      page.render({canvasContext: researchCanvas.getContext('2d'), viewport});
-      document.getElementById('researchPageInfo').textContent = `Page ${num} of ${researchDoc.numPages}`;
-    });
-  }
-  document.getElementById('researchPrevPage').onclick = () => {
-    if(researchDoc && researchPage>1){researchPage--;renderResearchPage(researchPage);}
-  };
-  document.getElementById('researchNextPage').onclick = () => {
-    if(researchDoc && researchPage<researchDoc.numPages){researchPage++;renderResearchPage(researchPage);}
+  renderCards(caseGrid, caseStudies, openPDFinCard.bind(null, 'case'));
+  renderCards(researchGrid, researchPapers, openPDFinCard.bind(null, 'research'));
+
+  // PDF render data and functions
+  const pdfData = {
+    case: { doc:null, page:1, canvas: null},
+    research: { doc:null, page:1, canvas: null}
   };
 
-  // Resume as before
-  let resumeDoc = null, resumePage = 1;
-  const resumeCanvas = document.getElementById('resumeCanvas');
-  function openResumePDF(url) {
+  pdfData.case.canvas = document.createElement('canvas');
+  pdfData.research.canvas = document.createElement('canvas');
+  pdfData.case.canvas.classList.add('pdf-canvas');
+  pdfData.research.canvas.classList.add('pdf-canvas');
+
+  // Attach canvases in advance for smooth swapping
+  caseGrid.parentNode.appendChild(pdfData.case.canvas);
+  pdfData.case.canvas.style.display = 'none';
+  researchGrid.parentNode.appendChild(pdfData.research.canvas);
+  pdfData.research.canvas.style.display = 'none';
+
+  // Clear expanded cards when switching away (optional UX choice)
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', () => {
+      // Show all cards, hide pdf canvas in those grids
+      [caseGrid, researchGrid].forEach(grid=>{
+        grid.querySelectorAll('.card').forEach(c=> {
+          c.style.display = '';
+          c.classList.remove('expanded');
+        });
+      });
+      pdfData.case.canvas.style.display = 'none';
+      pdfData.research.canvas.style.display = 'none';
+    });
+  });
+
+  // When card clicked: show pdf canvas inside or bottom of card, toggle expanded class for layout
+  function openPDFinCard(type, item, card) {
+    // Hide all pdfs and reset cards
+    if(type==='case'){
+      resetGrid(caseGrid, pdfData.case.canvas);
+    } else {
+      resetGrid(researchGrid, pdfData.research.canvas);
+    }
+
+    // Show PDF canvas inside this card, make card expanded
+    if(type==='case'){
+      pdfData.case.canvas.style.display = 'block';
+      card.appendChild(pdfData.case.canvas);
+      card.classList.add('expanded');
+      loadPDF(item.pdfUrl, pdfData.case);
+    } else {
+      pdfData.research.canvas.style.display = 'block';
+      card.appendChild(pdfData.research.canvas);
+      card.classList.add('expanded');
+      loadPDF(item.pdfUrl, pdfData.research);
+    }
+  }
+
+  // Reset grid cards and hide canvas
+  function resetGrid(grid, canvas) {
+    grid.querySelectorAll('.card').forEach(c=> {
+      c.style.display = 'flex';
+      c.classList.remove('expanded');
+    });
+    if(canvas) { canvas.style.display = 'none'; }
+  }
+
+  // General load PDF and render functions
+  function loadPDF(url, pdfState) {
     pdfjsLib.getDocument(url).promise.then(pdf => {
-      resumeDoc = pdf; resumePage = 1; renderResumePage(resumePage);
-      document.getElementById('resumeDownload').onclick = () => {
-        const a = document.createElement('a');
-        a.href = url; a.download = 'Resume.pdf'; a.click();
-      };
+      pdfState.doc = pdf;
+      pdfState.page = 1;
+      renderPDFPage(pdfState);
     });
   }
-  function renderResumePage(num) {
-    resumeDoc.getPage(num).then(page => {
-      const viewport = page.getViewport({ scale: 1.6 });
-      resumeCanvas.width = viewport.width; resumeCanvas.height = viewport.height;
-      page.render({canvasContext: resumeCanvas.getContext('2d'), viewport});
-      document.getElementById('resumePageInfo').textContent = `Page ${num} of ${resumeDoc.numPages}`;
+  function renderPDFPage(pdfState) {
+    pdfState.doc.getPage(pdfState.page).then(page => {
+      let viewport = page.getViewport({ scale: 1.6 });
+      pdfState.canvas.width = viewport.width;
+      pdfState.canvas.height = viewport.height;
+      page.render({
+        canvasContext: pdfState.canvas.getContext('2d'),
+        viewport: viewport
+      });
     });
   }
-  document.getElementById('resumePrevPage').onclick = () => {
-    if(resumeDoc && resumePage>1){resumePage--;renderResumePage(resumePage);}
-  };
-  document.getElementById('resumeNextPage').onclick = () => {
-    if(resumeDoc && resumePage<resumeDoc.numPages){resumePage++;renderResumePage(resumePage);}
-  };
-
-  // Init
-  openResumePDF('assets/resume/Resume.pdf');
 </script>
 </body>
 </html>
