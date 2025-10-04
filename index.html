@@ -17,25 +17,56 @@
     --max-width: 1140px;
     font-family: 'Inter', sans-serif;
   }
-  body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px;}
-  a { color: var(--primary); text-decoration: none; font-weight: 600; }
-  a:hover { color: var(--accent);}
-  main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px;}
-  .tabs { display: flex; justify-content: center; gap: 30px; margin: 38px 0;}
+  body {
+    margin: 0; background: var(--bg); color: var(--text); font-size: 16px;
+  }
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover, a:focus {
+    color: var(--accent);
+    outline: none;
+  }
+  main {
+    max-width: var(--max-width);
+    margin: 36px auto;
+    padding: 0 20px;
+  }
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 38px 0;
+  }
   .tab-button {
-    background: var(--card); color: var(--text); font-weight: 700;
-    font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
-    border: none; cursor: pointer; transition: all 0.25s;
+    background: var(--card);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 13px 36px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
     box-shadow: 0 2px 10px rgba(101,88,245,0.05);
   }
-  .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
-  .tab-content { display: none; }
-  .tab-content.active { display: block;}
+  .tab-button.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--shadow);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
   .cards-grid {
     display: grid;
-    /* uniform card width and height grid */
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 32px 32px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px 25px;
     margin-bottom: 48px;
   }
   .card {
@@ -44,73 +75,76 @@
     box-shadow: var(--shadow);
     cursor: pointer;
     user-select: none;
-    transition: box-shadow 0.25s ease;
-    overflow: hidden;
-    height: 390px; /* uniform height for thumbnails */
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    height: 390px;
+    transition: box-shadow 0.25s ease;
+    overflow: hidden;
   }
   .card:hover, .card:focus-within {
-    box-shadow: 0 14px 40px var(--primary);
+    box-shadow: 0 16px 38px var(--primary);
+  }
+  .card.expanded {
+    height: auto;
+    padding: 32px 36px;
   }
   .card img.thumbnail {
     width: 100%;
-    height: 190px;
+    height: 176px;
     object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 18px;
+    box-shadow: 0 2px 20px #00000013;
   }
   .project-title {
     font-weight: 800;
     font-size: 20px;
-    margin: 16px 20px 0 20px;
+    margin: 15px 0 8px 0;
     color: var(--primary);
     user-select: none;
   }
   .project-description {
-    flex-grow: 1; /* push author down */
+    flex-grow: 1;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
     color: var(--muted);
-    padding: 0 20px 20px 20px;
-    line-height: 1.45;
-    user-select: none;
+    line-height: 1.5;
+    margin-bottom: 10px;
   }
   .author {
-    font-size: 13px;
+    font-size: 12px;
     font-family: monospace;
     color: var(--muted);
-    padding: 0 20px 20px 20px;
-    user-select: none;
   }
   .pdf-viewer {
     background: #fbfcfd;
     border-radius: var(--radius);
-    max-width: 900px;
+    box-shadow: 0 14px 38px rgba(101, 88, 245, 0.1);
+    max-width: 880px;
     margin: 0 auto 48px;
-    box-shadow: 0 16px 36px rgba(101, 88, 245, 0.1);
-    padding: 24px;
+    padding: 30px;
   }
   canvas.pdf-canvas {
+    width: 100% !important;
+    height: auto !important;
     border-radius: 14px;
-    box-shadow: 0 5px 17px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 5px 17px rgba(0,0,0,0.07);
     display: block;
-    /* max width & height so no scroll */
-    max-width: 100%;
-    max-height: 70vh;
-    margin: 0 auto;
   }
   .pdf-controls {
-    margin-top: 24px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 18px;
   }
   .pdf-controls button {
     background: var(--primary);
     border: none;
     border-radius: 14px;
-    padding: 12px 30px;
+    padding: 14px 36px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -120,7 +154,7 @@
     cursor: not-allowed;
   }
   .page-info {
-    margin-top: 12px;
+    margin-top: 16px;
     text-align: center;
     font-weight: 700;
     color: var(--muted);
@@ -188,6 +222,9 @@
       grid-template-columns: 1fr;
       gap: 24px;
     }
+    .card {
+      height: auto;
+    }
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
@@ -241,16 +278,16 @@
 
   <section id="caseStudies" class="tab-content" role="tabpanel">
     <h3 style="color: var(--primary); margin-bottom: 20px;">Case Studies</h3>
-    <div class="cards-grid" id="caseStudiesGrid" aria-live="polite" aria-label="Case Studies List"></div>
+    <div class="cards-grid" id="caseStudiesGrid" aria-live="polite" aria-label="Case Studies"></div>
   </section>
 
   <section id="researchPapers" class="tab-content" role="tabpanel">
     <h3 style="color: var(--primary); margin-bottom: 20px;">Research Papers</h3>
-    <div class="cards-grid" id="researchGrid" aria-live="polite" aria-label="Research Papers List"></div>
+    <div class="cards-grid" id="researchGrid" aria-live="polite" aria-label="Research Papers"></div>
   </section>
 
   <div class="info-row" id="education-section">
-    <div class="info-card skills" aria-label="Skills List">
+    <div class="info-card skills" aria-label="Skills">
       <h3>Skills</h3>
       <div class="skill-tags">
         <span class="skill-tag">Python (Pandas)</span>
@@ -261,7 +298,7 @@
         <span class="skill-tag">Financial Modeling</span>
       </div>
     </div>
-    <div class="info-card education" aria-label="Education and Certifications">
+    <div class="info-card education" aria-label="Education & Certifications">
       <h3>Education & Certifications</h3>
       <ul>
         <li>Bachelor of Science (Hons) Computing — London Metropolitan University</li>
@@ -314,9 +351,9 @@
   const caseGrid = document.getElementById('caseStudiesGrid');
   const researchGrid = document.getElementById('researchGrid');
 
-  function renderGrid(container, items, clickHandler) {
+  function renderGrid(container, items, onClick) {
     container.innerHTML = '';
-    items.forEach(item => {
+    items.forEach((item, index) => {
       const c = document.createElement('div');
       c.className = 'card';
       c.tabIndex = 0;
@@ -328,7 +365,7 @@
         <p class="project-description">${item.description}</p>
         <div class="author">Aashish Paudel</div>
       `;
-      c.addEventListener('click', () => clickHandler(item, c));
+      c.addEventListener('click', () => onClick(item, c));
       container.appendChild(c);
     });
   }
@@ -339,15 +376,11 @@
   let currentCanvas = null;
 
   function clickCardToExpand(item, card) {
-    // Contract previously expanded card
     if (expandedCard && expandedCard !== card) contractCard(expandedCard);
-
-    // If clicked card already expanded, contract it, else expand
     if (expandedCard === card) {
       contractCard(card);
       return;
     }
-
     expandCard(card, item.pdfUrl, item.title);
     expandedCard = card;
   }
@@ -365,24 +398,20 @@
       </div>
       <div id="pdfPageInfo" class="page-info"></div>
     `;
-
     currentCanvas = card.querySelector('canvas');
     renderPDF(pdfUrl);
-
     card.querySelector('#prevPdfPage').addEventListener('click', () => {
       if (currentPage > 1) {
         currentPage--;
         renderPage(currentPage);
       }
     });
-
     card.querySelector('#nextPdfPage').addEventListener('click', () => {
       if (currentPage < currentPdfDoc.numPages) {
         currentPage++;
         renderPage(currentPage);
       }
     });
-
     card.querySelector('#downloadPdf').addEventListener('click', () => {
       const a = document.createElement('a');
       a.href = pdfUrl;
@@ -395,7 +424,6 @@
     card.classList.remove('expanded');
     card.style.height = '390px';
     const title = card.querySelector('h4')?.textContent || '';
-    // Refresh the card
     let items = (card.parentNode.id === 'caseStudiesGrid') ? caseStudies : researchPapers;
     const idx = items.findIndex(i => i.title === title);
     if (idx !== -1) {
@@ -420,9 +448,16 @@
   function renderPage(num) {
     currentPdfDoc.getPage(num).then(page => {
       let viewport = page.getViewport({ scale: 1 });
-      // Calculate scale to fit canvas within card container (max 550px height)
-      const maxHeight = 550;
-      const scale = maxHeight / viewport.height;
+      // Fit canvas width to card width max and height comfortable for reading
+      const maxWidth = currentCanvas.parentNode.clientWidth * 0.95;
+      const maxHeight = 500;
+      let scale = 1;
+      if (viewport.width > maxWidth) {
+        scale = maxWidth / viewport.width;
+      }
+      if (viewport.height * scale > maxHeight) {
+        scale = maxHeight / viewport.height;
+      }
       viewport = page.getViewport({ scale: scale });
       currentCanvas.width = viewport.width;
       currentCanvas.height = viewport.height;
@@ -431,14 +466,14 @@
     });
   }
 
-  // Resume pdf
+  // Resume PDF loading and pagination handlers
   const resumeCanvas = document.getElementById('resumeCanvas');
   let resumePdfDoc = null;
-  let resumePage = 1;
+  let resumeCurrentPage = 1;
   function openResumePDF(url) {
     pdfjsLib.getDocument(url).promise.then(pdf => {
       resumePdfDoc = pdf;
-      resumePage = 1;
+      resumeCurrentPage = 1;
       renderResumePage();
       document.getElementById('resumeDownload').onclick = () => {
         const a = document.createElement('a');
@@ -449,28 +484,28 @@
     });
   }
   function renderResumePage() {
-    resumePdfDoc.getPage(resumePage).then(page => {
+    resumePdfDoc.getPage(resumeCurrentPage).then(page => {
       const viewport = page.getViewport({ scale: 1.6 });
       resumeCanvas.width = viewport.width;
       resumeCanvas.height = viewport.height;
       page.render({canvasContext: resumeCanvas.getContext('2d'), viewport });
-      document.getElementById('resumePageInfo').textContent = `Page ${resumePage} of ${resumePdfDoc.numPages}`;
+      document.getElementById('resumePageInfo').textContent = `Page ${resumeCurrentPage} of ${resumePdfDoc.numPages}`;
     });
   }
   document.getElementById('resumePrevPage').onclick = () => {
-    if(resumePdfDoc && resumePage > 1) {
-      resumePage--;
+    if (resumePdfDoc && resumeCurrentPage > 1) {
+      resumeCurrentPage--;
       renderResumePage();
     }
   }
   document.getElementById('resumeNextPage').onclick = () => {
-    if(resumePdfDoc && resumePage < resumePdfDoc.numPages) {
-      resumePage++;
+    if (resumePdfDoc && resumeCurrentPage < resumePdfDoc.numPages) {
+      resumeCurrentPage++;
       renderResumePage();
     }
   }
 
-  // Init
+  // Initialize all grids and open resume PDF initially
   renderGrid(caseGrid, caseStudies, clickCardToExpand);
   renderGrid(researchGrid, researchPapers, clickCardToExpand);
   openResumePDF('assets/resume/Resume.pdf');
