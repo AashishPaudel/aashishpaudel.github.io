@@ -117,6 +117,10 @@
     max-height: 100vh;
     width: auto;
     height: auto;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
   }
   
   /* LEFT SIDE CONTROLS */
@@ -353,20 +357,48 @@
       const maxHeight = window.innerHeight;
       const maxWidth = window.innerWidth - 260; // Space for side controls
       
-      // Start with high scale for better text readability
-      let scale = 3.0;
+      // Get device pixel ratio for high DPI displays (minimum 2 for quality)
+      const pixelRatio = Math.max(window.devicePixelRatio || 1, 2);
+      
+      // Start with very high scale for maximum text readability
+      let scale = 4.5;
       const viewport = page.getViewport({ scale: 1 });
       
       // Calculate optimal scale to fit screen
       const scaleHeight = maxHeight / viewport.height;
       const scaleWidth = maxWidth / viewport.width;
-      scale = Math.min(scaleHeight, scaleWidth, 4.0); // Allow up to 4x zoom
+      scale = Math.min(scaleHeight, scaleWidth, 5.0); // Allow up to 5x zoom
       
-      const scaledViewport = page.getViewport({ scale: scale });
+      // Apply pixel ratio for ultra-sharp rendering
+      const outputScale = pixelRatio * scale;
+      
+      const scaledViewport = page.getViewport({ scale: outputScale });
+      
+      // Set canvas size accounting for pixel ratio
       pdfCanvas.width = scaledViewport.width;
       pdfCanvas.height = scaledViewport.height;
       
-      page.render({ canvasContext: ctx, viewport: scaledViewport });
+      // Scale CSS size back down
+      pdfCanvas.style.width = (scaledViewport.width / pixelRatio) + 'px';
+      pdfCanvas.style.height = (scaledViewport.height / pixelRatio) + 'px';
+      
+      // Render with highest quality settings
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: scaledViewport,
+        intent: 'display',
+        enableWebGL: true,
+        renderInteractiveForms: false
+      };
+      
+      // Enable image smoothing for better quality
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      
+      page.render(renderContext).promise.then(() => {
+        // Apply additional sharpening after render
+        ctx.filter = 'contrast(1.05) brightness(1.02)';
+      });
       
       currentPage = num;
       pageInfo.textContent = `Page ${currentPage} of ${pdfDoc.numPages}`;
