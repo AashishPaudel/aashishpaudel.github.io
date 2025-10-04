@@ -57,6 +57,23 @@
     margin-bottom: 18px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
   }
+  
+  /* Smaller cards for documents */
+  .card.document-card {
+    height: 280px;
+  }
+  .card.document-card img.thumbnail {
+    height: 140px;
+    object-fit: cover;
+  }
+  .card.document-card .project-title {
+    font-size: 18px;
+    margin: 12px 0 6px 0;
+  }
+  .card.document-card .project-description {
+    font-size: 13px;
+    line-height: 1.4;
+  }
   .project-title { font-weight: 800; font-size: 20px; margin: 16px 0 8px 0; color: var(--primary);}
   .project-description { flex-grow: 1; font-weight: 500; font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
   .author { font-size: 12px; font-family: monospace; color: var(--muted);}
@@ -516,7 +533,7 @@
       title: 'Pricing and Channel Strategy Analysis',
       description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
       pdfUrl: 'assets/case-studies/CaseStudy4.pdf',
-      thumbnail: 'Screenshot-2025-10-04-at-11.52.04-AM.jpg'
+      thumbnail: 'assets/case-studies/CaseStudy4.pdf' // Will generate from PDF
     }
   ];
 
@@ -525,27 +542,60 @@
       title: 'Conjoint Analysis for Pricing Research',
       description: 'Research paper on using conjoint analysis to optimize B2B SaaS pricing.',
       pdfUrl: 'assets/research-papers/ResearchPaper.pdf',
-      thumbnail: 'Screenshot-2025-10-04-at-1.22.11-AM.jpg'
+      thumbnail: 'assets/research-papers/ResearchPaper.pdf' // Will generate from PDF
     }
   ];
+
+  // Generate PDF thumbnail
+  function generatePdfThumbnail(pdfUrl, callback) {
+    pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+      pdf.getPage(1).then(page => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const viewport = page.getViewport({ scale: 0.5 });
+        
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        
+        page.render({
+          canvasContext: ctx,
+          viewport: viewport
+        }).promise.then(() => {
+          callback(canvas.toDataURL());
+        });
+      });
+    }).catch(err => {
+      console.error('Error generating thumbnail:', err);
+      callback('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="250"><rect width="200" height="250" fill="%23f0f0f0"/><text x="50%" y="50%" text-anchor="middle" fill="%236558f5" font-size="16">PDF Preview</text></svg>');
+    });
+  }
 
   // Render grids on load
   function renderGrid(container, items) {
     container.innerHTML = '';
     items.forEach(item => {
       const c = document.createElement('div');
-      c.className = 'card';
+      c.className = 'card document-card';
       c.tabIndex = 0;
       c.role = 'button';
       c.setAttribute('aria-label', `${item.title} - Click to view document`);
+      
+      // Create placeholder while loading
       c.innerHTML = `
-        <img src="${item.thumbnail}" class="thumbnail" alt="${item.title}" />
+        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='140'><rect width='200' height='140' fill='%23f0f0f0'/><text x='50%' y='50%' text-anchor='middle' fill='%236558f5' font-size='14'>Loading...</text></svg>" class="thumbnail" alt="${item.title}" />
         <div class="project-title">${item.title}</div>
         <p class="project-description">${item.description}</p>
         <div class="author">Aashish Paudel</div>
       `;
+      
       c.addEventListener('click', () => openPDF(item.pdfUrl, item.title));
       container.appendChild(c);
+      
+      // Generate actual thumbnail
+      generatePdfThumbnail(item.pdfUrl, (thumbnailUrl) => {
+        const img = c.querySelector('img');
+        if (img) img.src = thumbnailUrl;
+      });
     });
   }
   renderGrid(document.getElementById('caseStudiesGrid'), caseStudies);
