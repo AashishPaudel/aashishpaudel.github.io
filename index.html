@@ -87,7 +87,7 @@
                 <div class="thumb">CS</div>
                 <div>
                   <p class="proj-title">
-                    <a href="assets/case-studies/CaseStudy4" target="_blank" style="color:white; text-decoration:none;">
+                    <a href="javascript:void(0);" onclick="openPDF('assets/case-studies/casestudy4')" class="btn">View Case Study</a>
                       Pricing and Channel Strategy Analysis for Premium Product 
                     </a>
                   </p>
@@ -199,6 +199,26 @@
       document.getElementById(btn.dataset.tab).classList.add('active');
     });
   });
+</script>
+  <!-- PDF Modal -->
+<div id="pdfModal" style="
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+  <div style="position:relative; width:80%; height:80%; background:#fff; border-radius:8px; overflow:hidden;">
+    <span onclick="closePDF()" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px; font-weight:bold; color:#333;">&times;</span>
+    <iframe id="pdfViewer" src="" style="width:100%; height:100%; border:none;"></iframe>
+  </div>
+</div>
+  <script>
+function openPDF(path) {
+  document.getElementById("pdfViewer").src = path;
+  document.getElementById("pdfModal").style.display = "flex";
+}
+
+function closePDF() {
+  document.getElementById("pdfModal").style.display = "none";
+  document.getElementById("pdfViewer").src = "";
+}
 </script>
 </body>
 </html>
