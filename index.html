@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Aashish Paudel — Data Analyst Portfolio</title>
 
-<!-- Styles -->
+<!-- Simple modern styling (all inline for copy-paste) -->
 <style>
   :root{
     --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#7c3aed;
@@ -36,88 +36,248 @@
   .tab-buttons{ display:flex; gap:8px; margin:12px 0; }
   .tab-btn{ background:var(--glass); border:none; padding:8px 14px; border-radius:8px; color:var(--muted); cursor:pointer; font-weight:600; }
   .tab-btn.active{ background:var(--accent); color:white; }
-
   .tab-panel{ display:none; }
   .tab-panel.active{ display:block; }
 
   /* PDF Modal styling */
   #pdfModal {
     display:none; 
-    position:fixed; 
-    top:0; left:0; 
-    width:100%; height:100%; 
-    background:rgba(0,0,0,0.8); 
-    z-index:1000; 
-    align-items:flex-start; 
-    justify-content:center;
-    padding-top: 10px;
+    position:fixed; top:0; left:0; width:100%; height:100%; 
+    background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;
   }
   #pdfModalContent {
-    position: relative;
-    width: 90%; /* more width for better view */
-    height: 85vh; /* more height for full page view */
-    background: #fff; 
-    border-radius: 8px; 
-    overflow: hidden; 
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
+    position:relative; 
+    width:80%; 
+    height:85vh; /* increased height for better viewing */
+    background:#fff; 
+    border-radius:8px; 
+    overflow:hidden; 
+    padding:10px;
+    display:flex; 
+    flex-direction:column; 
+    align-items:center;
+    justify-content:center;
   }
   #pdfCanvas {
     border:1px solid #ccc; 
-    flex:1; /* fill available space */
-    width: 100%; 
+    max-width:100%;
+    max-height:100%;
   }
+  /* Buttons placed vertically center on left and right sides */
   #pdfControls {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
+    position:absolute;
+    top:50%;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:space-between;
+    padding: 0 12px;
     transform: translateY(-50%);
-    pointer-events: none; /* allow only buttons to be clicked */
+    pointer-events:none;
   }
   #pdfControls button {
-    pointer-events: auto; /* activate buttons */
-    padding: 8px 16px;
-    background: #7c3aed;
-    border: none;
-    border-radius: 4px;
+    pointer-events:auto;
+    background: var(--accent);
+    border-radius: 6px;
+    border:none;
     color: white;
-    font-weight: bold;
+    padding: 8px 14px;
+    font-weight: 700;
     cursor: pointer;
   }
   #pageInfo {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    color: #fff;
+    position:absolute;
+    bottom:10px;
+    width:100%;
+    text-align:center;
+    color:#333;
+    font-weight:600;
+  }
+
+  @media (max-width:900px){ 
+    main{ grid-template-columns:1fr; } 
+    .top-cta{ display:none; } 
+    .avatar{ width:76px;height:76px;font-size:28px; } 
   }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+
 </head>
 <body>
-<!-- Content omitted for brevity (your existing content remains) -->
+  <div class="wrap">
+    <header>
+      <div class="avatar">AP</div>
+      <div>
+        <h1>👋 Hi, I'm <strong>Aashish Paudel</strong></h1>
+        <p class="lead"> Finance, Pricing & Data Enthusiast • Pricing Strategy • Financial Analysis • CFA Level 1 candidate • — I build analytics and strategy that helps businesses succeed </p>
+      </div>
 
-<!-- PDF Modal -->
-<div id="pdfModal">
-  <div id="pdfModalContent">
-    <span onclick="closePDF()" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px; font-weight:bold; color:#333;">&times;</span>
-    <canvas id="pdfCanvas"></canvas>
-    <div id="pdfControls">
-      <button onclick="prevPage()">Previous</button>
-      <button onclick="nextPage()">Next</button>
-    </div>
-    <div id="pageInfo"></div>
+      <div class="top-cta">
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn" href="#contact">Contact</a>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div class="card">
+          <h3 style="margin:0 0 8px 0">About Me</h3>
+          <p style="color:var(--muted); margin:0 0 12px 0;">
+           "I help shape financial strategy by analyzing data, building models, and preparing reports that support business and investment decisions. My work also includes pricing strategy and research, backed by real-world projects such as case studies and a research paper. In addition, I’ve developed multiple projects focused on financial modeling, reporting, and strategy."
+          </p>
+
+          <!-- PROJECTS SECTION -->
+          <h4 id="projects" style="margin-top:12px">Projects</h4>
+
+          <!-- Tab buttons -->
+          <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="case">Case Studies</button>
+            <button class="tab-btn" data-tab="research">Research Papers</button>
+            <button class="tab-btn" data-tab="proj">Projects</button>
+            <button class="tab-btn" data-tab="extra">Resume</button>
+          </div>
+
+          <!-- Tab content -->
+          <div class="tab-panel active" id="case">
+            <div class="projects">
+              <div class="proj">
+                <div class="thumb">CS</div>
+                <div>
+                  <p class="proj-title">
+                    <a href="javascript:void(0);" onclick="openPDF('assets/case-studies/CaseStudy4.pdf')">
+                      Pricing and Channel Strategy Analysis for Premium Product 
+                    </a>
+                  </p>
+                  <p class="proj-desc">
+                    This project involves pricing analysis and product strategy in a complex product pricing and channel strategy scenario. This case study dives deep into the effects of aggressive discounting and a fixed dealer pricing on margins, brand positioning, and dealer incentives.
+
+                    In this study I have applied cost and contribution margin analysis, also explored the breakeven impacts, and have given my strategic recommendations that balances fixed pricing with flexible minimum advertised pricing (MAP). The goal for this study was to preserve the product's premium status and to enhance dealer collaboration and also to better the revenue performance.
+
+                    #PricingStrategy #CostAnalysis #ProductStrategy #RevenueManagement.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="research">
+            <div class="projects">
+              <p style="color:var(--muted);">No research papers uploaded yet.</p>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="proj">
+            <div class="projects">
+              <div class="proj">
+                <div class="thumb">FR</div>
+                <div>
+                  <p class="proj-title">Financial-Risk-Modeling</p>
+                  <p class="proj-desc">Comparative study: logistic regression vs XGBoost for credit default prediction.</p>
+                </div>
+              </div>
+              <div class="proj">
+                <div class="thumb">CF</div>
+                <div>
+                  <p class="proj-title">Collections-Float-Analysis</p>
+                  <p class="proj-desc">Time-series cash float optimization & recommendations.</p>
+                </div>
+              </div>
+              <div class="proj">
+                <div class="thumb">DB</div>
+                <div>
+                  <p class="proj-title">DBT-ETL-Sample</p>
+                  <p class="proj-desc">Small dbt project demonstrating models, tests, and docs.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="extra">
+            <div class="projects">
+              <p style="color:var(--muted);">Extra section coming soon…</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4 style="margin:0 0 8px 0">Writing & Case Studies</h4>
+          <p style="color:var(--muted); margin:0 0 8px 0;">Short writeups that explain business context, approach, and impact. Use images or GIF walkthroughs for dashboards.</p>
+          <a href="#contact" class="btn" style="margin-top:8px; display:inline-block">Get feedback</a>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h4 style="margin:0 0 6px 0">Skills</h4>
+          <div class="stack">
+            <div class="chip">Python (Pandas)</div>
+            <div class="chip">SQL</div>
+            <div class="chip">Tableau</div>
+            <div class="chip">SAS</div>
+            <div class="chip">dbt</div>
+            <div class="chip">Financial Modeling</div>
+          </div>
+
+          <h4 style="margin-top:12px">Quick Links</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+            <a href="https://github.com/yourusername" class="btn" style="text-decoration:none; display:inline-block">GitHub</a>
+            <a href="https://linkedin.com/in/yourprofile" class="btn" style="background:#0ea5a4;">LinkedIn</a>
+            <a href="mailto:your-email@example.com" class="btn" style="background:#2563eb;">Email</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4 style="margin:0 0 6px 0">Badges</h4>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white" alt="">
+            <img src="https://img.shields.io/badge/SQL-336791?style=flat&logo=postgresql&logoColor=white" alt="">
+            <img src="https://img.shields.io/badge/Tableau-E97627?style=flat&logo=tableau&logoColor=white" alt="">
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer id="contact">
+      <div class="card" style="display:inline-block; padding:14px 18px;">
+        <strong>Contact</strong>
+        <p style="color:var(--muted); margin:6px 0 0;">Email: <a href="mailto:your-email@example.com">your-email@example.com</a> • LinkedIn: your-linkedin-link</p>
+      </div>
+      <div style="height:18px"></div>
+      <div>© <span id="yr"></span> Aashish Paudel — Data, Finance & Analytics</div>
+    </footer>
   </div>
-</div>
 
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+  <div id="pdfModal" style="
+    display:none; 
+    position:fixed; top:0; left:0; width:100%; height:100%; 
+    background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+    
+    <div id="pdfModalContent">
+      <span onclick="closePDF()" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px; font-weight:bold; color:#333;">&times;</span>
+      <canvas id="pdfCanvas"></canvas>
+      <div id="pdfControls">
+        <button onclick="prevPage()">Previous</button>
+        <button onclick="nextPage()">Next</button>
+      </div>
+      <div id="pageInfo"></div>
+    </div>
+  </div>
+
 <script>
-  // your existing code for tab switching remains...
+  document.getElementById('yr').innerText = new Date().getFullYear();
+
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
 
   // PDF.js variables
   let pdfDoc = null;
@@ -138,8 +298,8 @@
     pdfDoc.getPage(num).then(page => {
       const viewport = page.getViewport({ scale: 1 });
       const modalContent = document.getElementById("pdfModalContent");
-      const maxWidth = modalContent.clientWidth * 0.95;  // slightly less for margins
-      const maxHeight = modalContent.clientHeight * 0.8; // fit in height 
+      const maxWidth = modalContent.clientWidth * 0.95;
+      const maxHeight = modalContent.clientHeight * 0.8;
       const scale = Math.min(maxWidth / viewport.width, maxHeight / viewport.height);
       const scaledViewport = page.getViewport({ scale });
       canvas.width = scaledViewport.width;
@@ -151,17 +311,15 @@
   }
 
   function nextPage() {
-    if (pdfDoc && pageNum < pdfDoc.numPages) {
-      pageNum++;
-      renderPage(pageNum);
-    }
+    if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+    pageNum++;
+    renderPage(pageNum);
   }
 
   function prevPage() {
-    if (pdfDoc && pageNum > 1) {
-      pageNum--;
-      renderPage(pageNum);
-    }
+    if (!pdfDoc || pageNum <= 1) return;
+    pageNum--;
+    renderPage(pageNum);
   }
 
   function closePDF() {
