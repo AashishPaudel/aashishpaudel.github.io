@@ -3,302 +3,272 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aashish Paudel — Portfolio</title>
+<title>Aashish Paudel — Finance & Data Portfolio</title>
 <style>
   :root {
-    --bg: #f9f9fb;
-    --primary: #6349ff;
-    --secondary: #7B62FF;
-    --text-primary: #222;
-    --text-muted: #666;
+    --primary: #5e56ff;
+    --secondary: #27c9ff;
+    --bg: #f2f4fb;
     --card-bg: #fff;
+    --text-primary: #222;
+    --text-muted: #555;
     --border-radius: 14px;
-    --shadow: rgba(0,0,0,0.12);
+    --shadow: rgba(0, 0, 0, 0.1);
     --max-width: 1100px;
     font-family: 'Inter', sans-serif;
   }
-
   html, body {
-    margin: 0; padding: 0; height: 100%;
-    background: var(--bg);
-    color: var(--text-primary);
+    margin: 0; padding: 0; background: var(--bg); color: var(--text-primary);
+    font-size: 16px; line-height: 1.5;
   }
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
   }
-
+  a:hover {
+    color: var(--secondary);
+  }
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 32px;
     background: var(--primary);
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    box-shadow: 0 2px 8px var(--shadow);
   }
-
   header h1 {
-    font-weight: 700;
-    margin: 0;
-    font-size: 24px;
+    font-weight: 900;
+    font-size: 28px;
   }
-
   nav a {
     margin-left: 24px;
-    text-decoration: none;
-    color: white;
-    font-weight: 600;
-    font-transform: uppercase;
-    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
   }
-
-  nav a:hover {
-    color: #d3cfff;
-  }
-
   main {
-    flex: 1 0 auto;
     max-width: var(--max-width);
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 0 24px;
   }
-
   .tabs {
     display: flex;
     justify-content: center;
-    gap: 28px;
-    margin: 40px 0;
+    gap: 24px;
+    margin: 32px 0;
   }
-
   .tab-button {
+    padding: 12px 26px;
     font-weight: 700;
     font-size: 16px;
-    padding: 10px 24px;
     border-radius: var(--border-radius);
     background: var(--card-bg);
-    box-shadow: 0 4px 18px var(--shadow);
+    box-shadow: 0 4px 16px var(--shadow);
+    border: none;
     cursor: pointer;
     color: var(--text-primary);
-    border: none;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: all 0.3s ease;
   }
-
   .tab-button.active {
     background: var(--primary);
     color: white;
+    box-shadow: 0 6px 20px var(--primary);
   }
-
-  section.tab-panel {
+  .tab-content {
     display: none;
   }
-  section.tab-panel.active {
-   display: block;
+  .tab-content.active {
+    display: block;
   }
-
-  /* Projects grid */
-  .projects-grid {
+  /* Project Cards */
+  .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit,minmax(290px,1fr));
+    gap: 32px;
   }
-
-  .project-card {
+  .card {
     background: var(--card-bg);
+    padding: 22px;
     border-radius: var(--border-radius);
-    padding: 18px;
-    box-shadow: 0 8px 24px var(--shadow);
+    box-shadow: 0 6px 20px var(--shadow);
+    transition: box-shadow 0.3s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.3s ease;
   }
-
-  .project-card:hover {
-    box-shadow: 0 14px 40px var(--shadow);
+  .card:hover {
+    box-shadow: 0 12px 35px var(--primary);
   }
-
-  .project-title {
+  .card img {
+    border-radius: var(--border-radius);
+    margin-bottom: 16px;
+    box-shadow: 0 3px 8px var(--shadow);
+  }
+  .card h3 {
+    margin: 0 0 10px;
     font-weight: 800;
-    font-size: 20px;
-    margin-bottom: 8px;
     color: var(--primary);
+    font-size: 20px;
   }
-  .project-description {
-    font-weight: 400;
-    font-size: 14px;
+  .card p {
+    flex-grow: 1;
+    margin-bottom: 12px;
     color: var(--text-muted);
-    margin-bottom: auto;
-  }
-
-  /* Tableau project viewer */
-  .tableau-slider {
-    max-width: 700px;
-    margin: 0 auto 60px;
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    box-shadow: 0 8px 26px var(--shadow);
-    overflow: hidden;
-  }
-  .tableau-iframe {
-    width: 100%;
-    height: 480px;
-    border: none;
-    border-radius: var(--border-radius);
-  }
-
-  /* Controls */
-  .slider-controls {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    padding: 16px 0;
-  }
-
-  .slider-controls button {
-    background: var(--primary);
-    border: none;
-    color: white;
-    border-radius: 8px;
-    padding: 12px 22px;
-    font-weight: 600;
-    cursor: pointer;
     font-size: 14px;
-    transition: background 0.3s ease;
   }
-  .slider-controls button:hover:not(:disabled) {
-    background: var(--secondary);
-  }
-  .slider-controls button:disabled {
-    background: #b0aaff;
-    cursor: not-allowed;
-  }
-
-  /* Skils list in header right */
-  .skills-menu {
+  /* Skills and Education */
+  .info-section {
     display: flex;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 60px;
     flex-wrap: wrap;
-    font-weight: 700;
-    font-size: 14px;
-    color: #fff;
-    max-width: 300px;
   }
-  .skill-chip {
-    background: #6a5eff;
-    padding: 6px 12px;
-    border-radius: 24px;
+  .skills, .education {
+    background: var(--card-bg);
+    flex: 1 1 320px;
+    padding: 26px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 24px var(--shadow);
+  }
+  .skills h2, .education h2 {
+    font-weight: 900;
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .skill-tag {
+    background: var(--primary);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 14px;
     user-select: none;
   }
-
-  /* Education */
-  .education-section {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: 24px;
-    margin-top: 60px;
-    max-width: 650px;
-    box-shadow: 0 9px 30px var(--shadow);
-  }
-  .education-section h2 {
-    font-weight: 900;
-    font-size: 24px;
-    margin-bottom: 18px;
-    color: var(--primary);
-  }
-  .education-section ul {
+  .education ul {
     padding-left: 20px;
     color: var(--text-muted);
+    font-weight: 600;
   }
-  .education-section ul li {
-    line-height: 2;
+  .education li {
+    margin-bottom: 8px;
     font-size: 15px;
   }
-
+  /* Footer */
+  footer {
+    padding: 22px;
+    text-align: center;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-top: 80px;
+  }
   /* PDF Modal */
   #pdfModal {
     display: none;
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top:0; left:0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
     justify-content: center;
     align-items: center;
+    z-index: 10000;
   }
   #pdfContent {
-    width: 80%;
-    max-width: 900px;
-    height: 80vh;
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    overflow: hidden;
     position: relative;
+    background: white;
+    border-radius: var(--border-radius);
+    width: 80%;
+    max-width: 930px;
+    height: 85vh;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-  }
-  #pdfCanvas {
-    max-width: 100%;
-    max-height: 100%;
   }
   #pdfClose {
     position: absolute;
     top: 10px;
     right: 20px;
-    font-size: 32px;
+    font-size: 30px;
+    font-weight: 700;
     cursor: pointer;
-    color: var(--primary);
-    font-weight: 900;
-    z-index: 10000;
+    user-select: none;
+    color: #444;
+  }
+  #pdfCanvas {
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 30px;
   }
   #downloadBtn {
     position: absolute;
     top: 10px;
     left: 20px;
     background: var(--primary);
-    color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-weight: 700;
+    color: white;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px;
     cursor: pointer;
-    z-index: 10000;
+    user-select: none;
     display: none;
   }
   #pageInfo {
     position: absolute;
-    bottom: 12px;
-    right: 20px;
-    color: var(--text-muted);
+    bottom: 15px;
+    right: 25px;
     font-weight: 700;
-    font-size: 15px;
-    z-index: 10000;
+    color: var(--text-muted);
+    user-select: none;
   }
   #pdfNav {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 16px;
+    margin: 10px 0 20px;
   }
   #pdfNav button {
     background: var(--primary);
     border: none;
-    border-radius: 8px;
     color: white;
-    padding: 10px 16px;
-    cursor: pointer;
+    padding: 10px 24px;
+    border-radius: 10px;
     font-weight: 700;
+    cursor: pointer;
   }
   #pdfNav button:disabled {
-    background: #bbafff;
-    cursor: default;
+    background: #b2aaff;
+    cursor:auto;
   }
-
+  /* Responsive */
   @media (max-width: 900px) {
-    header { padding: 16px; }
-    main { margin: 20px; }
-    .projects-grid { grid-template-columns: 1fr; }
+    header {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+    .info-section {
+      flex-direction: column;
+      gap: 30px;
+    }
+    .skills, .education {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
@@ -306,61 +276,66 @@
 
 <header>
   <h1>Aashish Paudel</h1>
-  <nav aria-label="Main Site Navigation">
-    <a href="#education-certifications">Education & Certifications</a>
+  <nav aria-label="Main navigation">
+    <a href="#education-and-certifications" style="font-weight:700; font-size:16px; color:white;">Education & Certifications</a>
   </nav>
-  <div class="skills-menu" aria-label="Skills Menu">
-    <div class="skill-chip">Python (Pandas)</div>
-    <div class="skill-chip">SQL</div>
-    <div class="skill-chip">Tableau</div>
-    <div class="skill-chip">SAS</div>
-    <div class="skill-chip">dbt</div>
-    <div class="skill-chip">Financial Modeling</div>
+  <div class="skills-menu" aria-label="Skills list">
+    <span class="skill-tag">Python (Pandas)</span>
+    <span class="skill-tag">SQL</span>
+    <span class="skill-tag">Tableau</span>
+    <span class="skill-tag">SAS</span>
+    <span class="skill-tag">dbt</span>
+    <span class="skill-tag">Financial Modeling</span>
   </div>
 </header>
 
 <main>
-  <section class="about-section" id="about-me" aria-label="About Me">
+  <section class="about-section" aria-label="About Me" style="text-align: center; margin-bottom: 60px;">
     <h2>About Me</h2>
-    <p>I build financial strategies with data-driven insights, modeling, and analysis. Connect with me to see how I can help your business grow.</p>
+    <p>I build financial strategies with data-driven insights, pricing strategy and research backed by academic and industry projects.</p>
   </section>
 
-  <nav role="tablist" class="tabs" aria-label="Portfolio Sections">
-    <button class="tab-button active" role="tab" aria-selected="true" aria-controls="projects" id="tab-projects" data-tab="projects">Projects</button>
-    <button class="tab-button" role="tab" aria-selected="false" aria-controls="resume" id="tab-resume" data-tab="resume">Resume</button>
-    <button class="tab-button" role="tab" aria-selected="false" aria-controls="case-studies" id="tab-case-studies" data-tab="case-studies">Case Studies</button>
-    <button class="tab-button" role="tab" aria-selected="false" aria-controls="research-papers" id="tab-research-papers" data-tab="research-papers">Research Paper</button>
+  <nav class="tabs" role="tablist" aria-label="Portfolio sections navigation">
+    <button role="tab" aria-selected="true" aria-controls="projects" id="tab-projects" class="tab-button active" data-tab="projects">Projects</button>
+    <button role="tab" aria-selected="false" aria-controls="resume" id="tab-resume" class="tab-button" data-tab="resume">Resume</button>
+    <button role="tab" aria-selected="false" aria-controls="caseStudies" id="tab-caseStudies" class="tab-button" data-tab="caseStudies">Case Studies</button>
+    <button role="tab" aria-selected="false" aria-controls="researchPapers" id="tab-researchPapers" class="tab-button" data-tab="researchPapers">Research Papers</button>
   </nav>
 
-  <section id="projects" class="tab-panel active" role="tabpanel" aria-labelledby="tab-projects">
+  <section id="projects" class="tab-content active" role="tabpanel" aria-labelledby="tab-projects">
     <h3>Tableau Projects</h3>
-    <div class="tableau-slider">
-      <iframe id="tableau-iframe" class="tableau-iframe" src="https://public.tableau.com/views/SampleSuperstore/SalesOverview" allowfullscreen></iframe>
-      <div class="slider-controls">
-        <button id="prevProjectBtn">Previous</button>
-        <button id="nextProjectBtn">Next</button>
+    <div class="cards-grid">
+      <div class="card" onclick="window.open('https://public.tableau.com/views/BicycleShop/BicycleShopDashboard', '_blank')">
+        <img src="https://public.tableau.com/static/images/Bi/BicycleShop/BicycleShopDashboard/1_rss.png" alt="Bicycle Shop Dashboard" />
+        <h3 class="project-title">Bicycle Shop</h3>
+        <p>An insightful sales and revenue dashboard with key performance indicators for the bicycle shop.</p>
+        <small>Aashish Paudel</small>
+      </div>
+      <div class="card" onclick="window.open('https://public.tableau.com/views/KingCountyHouseSales/KingCountyHouseSalesDashboard', '_blank')">
+        <img src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales/KingCountyHouseSalesDashboard/1.png" alt="King County House Sales" />
+        <h3 class="project-title">King County House Sales</h3>
+        <p>Visualizes house price trends, heatmaps, filters and key sales data for King County, Washington.</p>
+        <small>Aashish Paudel</small>
       </div>
     </div>
   </section>
 
-  <section id="resume" class="tab-panel" role="tabpanel" aria-labelledby="tab-resume">
-    <h3>My Resume</h3>
-    <button class="btn" onclick="openPDF('assets/resume/Resume.pdf')">View & Download Resume</button>
+  <section id="resume" class="tab-content" role="tabpanel" aria-labelledby="tab-resume" style="text-align:center;">
+    <h3>Resume</h3>
+    <button class="btn" style="margin-top: 20px;" onclick="openPDF('assets/resume/Resume.pdf')">View & Download Resume</button>
   </section>
 
-  <section id="case-studies" class="tab-panel" role="tabpanel" aria-labelledby="tab-case-studies">
+  <section id="caseStudies" class="tab-content" role="tabpanel" aria-labelledby="tab-caseStudies">
     <h3>Case Studies</h3>
-    <div class="projects-grid" id="caseStudiesGrid">
-      <!-- case study cards populated dynamically -->
-    </div>
+    <div class="cards-grid" id="caseStudiesGrid"></div>
   </section>
 
-  <section id="research-papers" class="tab-panel" role="tabpanel" aria-labelledby="tab-research-papers">
+  <section id="researchPapers" class="tab-content" role="tabpanel" aria-labelledby="tab-researchPapers">
     <h3>Research Papers</h3>
-    <p>No research papers uploaded yet.</p>
+    <p style="text-align:center; margin-top: 40px;">No research papers uploaded yet.</p>
   </section>
 
-  <section id="education-certifications" class="education-section" aria-label="Education & Certifications">
+  <section id="education-and-certifications" class="education-section" aria-label="Education and Certifications">
     <h2>Education & Certifications</h2>
     <ul>
       <li>Bachelor of Science (Hons) Computing — London Metropolitan University</li>
@@ -372,17 +347,17 @@
 </main>
 
 <footer>
-  <p>© <span id="year"></span> Aashish Paudel — Financial Analytics Portfolio</p>
+  © <span id="year"></span> Aashish Paudel — Financial Analytics Portfolio
 </footer>
 
-<!-- PDF Viewer Modal -->
-<div id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfHeading" aria-describedby="pdfDesc">
+<!-- PDF Modal -->
+<div id="pdfModal" role="dialog" aria-modal="true" aria-label="PDF Viewer Modal">
   <div id="pdfContent">
     <button id="downloadBtn" aria-label="Download PDF">Download PDF</button>
-    <div id="pdfClose" aria-label="Close PDF viewer" onclick="closePDF()">&times;</div>
+    <div id="pdfClose" aria-label="Close PDF Viewer" role="button" tabindex="0" onclick="closePDF()">&times;</div>
     <div id="pageInfo" aria-live="polite"></div>
     <canvas id="pdfCanvas" role="document"></canvas>
-    <div id="pdfNav">
+    <div id="pdfNav" aria-label="PDF Page navigation">
       <button id="prevPageBtn">Previous</button>
       <button id="nextPageBtn">Next</button>
     </div>
@@ -391,94 +366,62 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
 <script>
-  const tabs = document.querySelectorAll('.tab-button');
-  const panels = document.querySelectorAll('.tab-panel');
-  const caseStudiesGrid = document.getElementById('caseStudiesGrid');
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Populate case studies dynamically
+  // Case studies data
   const caseStudies = [
     {
-      title: 'Pricing and Channel Strategy Analysis for Premium Product',
-      desc: 'This project involves pricing analysis and product strategy in a complex product pricing and channel strategy scenario...',
-      pdfUrl: 'assets/case-studies/CaseStudy4.pdf'
+      title: "Pricing and Channel Strategy Analysis for Premium Product",
+      description: "Detailed analysis of pricing and channel impacts on premium product margin and strategy.",
+      pdfUrl: "assets/case-studies/CaseStudy4.pdf"
     }
-    // add more as needed
+    // add more case studies here...
   ];
-
+  const caseStudiesGrid = document.getElementById('caseStudiesGrid');
   function populateCaseStudies() {
     caseStudiesGrid.innerHTML = '';
-    caseStudies.forEach(study => {
-      const card = document.createElement('div');
-      card.classList.add('project-card');
-      card.innerHTML = `
-        <h4 class="project-title">${study.title}</h4>
-        <p class="project-description">${study.desc}</p>
-        <button class="btn" onclick="openPDF('${study.pdfUrl}')">View Case Study</button>
+    caseStudies.forEach(cs => {
+      const div = document.createElement('div');
+      div.classList.add('card');
+      div.innerHTML = `
+        <h4>${cs.title}</h4>
+        <p>${cs.description}</p>
+        <button class="btn" onclick="openPDF('${cs.pdfUrl}')">View Case Study</button>
       `;
-      caseStudiesGrid.appendChild(card);
+      caseStudiesGrid.appendChild(div);
     });
   }
   populateCaseStudies();
 
-  // Tab navigation
+  // Tab navigation logic
+  const tabs = document.querySelectorAll('.tab-button');
+  const contents = document.querySelectorAll('.tab-content');
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => {
-        t.classList.remove('active');
-        panels.forEach(p => p.classList.remove('active'));
-      });
+      tabs.forEach(t => { t.classList.remove('active'); });
+      contents.forEach(c => { c.classList.remove('active'); });
       tab.classList.add('active');
-      const panel = document.getElementById(tab.dataset.tab);
-      panel.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
     });
   });
 
-  // Tableau projects iframe URLs (one by one)
-  const tableauProjects = [
-    'https://public.tableau.com/views/RegionalSampleWorkbook/Storms', // Example Project URL 1
-    'https://public.tableau.com/views/Superstore/SalesOverview' // Example Project URL 2
-  ];
-  let currentProjectIndex = 0;
-  const iframe = document.getElementById('tableau-iframe');
-  const nextBtn = document.getElementById('nextProjectBtn');
-  const prevBtn = document.getElementById('prevProjectBtn');
-
-  function updateIframe() {
-    iframe.src = tableauProjects[currentProjectIndex];
-    prevBtn.disabled = currentProjectIndex === 0;
-    nextBtn.disabled = currentProjectIndex === tableauProjects.length - 1;
-  }
-  nextBtn.addEventListener('click', () => {
-    if(currentProjectIndex < tableauProjects.length - 1) {
-      currentProjectIndex++;
-      updateIframe();
-    }
-  });
-  prevBtn.addEventListener('click', () => {
-    if(currentProjectIndex > 0) {
-      currentProjectIndex--;
-      updateIframe();
-    }
-  });
-  updateIframe();
-
-  // PDF Modal with pdfjs
-  let pdfDoc = null, pageNum = 1;
+  // PDF modal logic using pdf.js
+  let pdfDoc = null;
+  let currentPage = 1;
   const canvas = document.getElementById('pdfCanvas');
   const ctx = canvas.getContext('2d');
   const downloadBtn = document.getElementById('downloadBtn');
   const pdfModal = document.getElementById('pdfModal');
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-
   function openPDF(url) {
     pdfModal.style.display = 'flex';
     pdfjsLib.getDocument(url).promise.then(pdf => {
       pdfDoc = pdf;
-      pageNum = 1;
-      renderPage(pageNum);
+      currentPage = 1;
+      renderPage(currentPage);
       if(url.toLowerCase().includes('resume.pdf')) {
-        downloadBtn.style.display = 'inline-block';
+        downloadBtn.style.display = 'block';
         downloadBtn.onclick = () => {
           const a = document.createElement('a');
           a.href = url;
@@ -491,40 +434,42 @@
     });
   }
 
-  document.getElementById('pdfClose').addEventListener('click', closePDF);
-  document.getElementById('prevPageBtn').addEventListener('click', () => {
-    if(pdfDoc && pageNum > 1) {
-      pageNum--;
-      renderPage(pageNum);
-    }
-  });
-  document.getElementById('nextPageBtn').addEventListener('click', () => {
-    if(pdfDoc && pageNum < pdfDoc.numPages) {
-      pageNum++;
-      renderPage(pageNum);
-    }
-  });
-
   function renderPage(num) {
     pdfDoc.getPage(num).then(page => {
       const viewport = page.getViewport({ scale: 1 });
-      const maxHeight = pdfContent.clientHeight*0.96;
-      const scale = 3 * maxHeight / viewport.height;
+      const container = document.getElementById('pdfContent');
+      const scale = 3 * container.clientHeight * 0.95 / viewport.height;
       const scaledViewport = page.getViewport({ scale });
       canvas.width = scaledViewport.width;
       canvas.height = scaledViewport.height;
-      canvas.style.height = maxHeight + "px";
-      canvas.style.width = scaledViewport.width * maxHeight / scaledViewport.height + "px";
-      page.render({ canvasContext: ctx, viewport: scaledViewport });
+      canvas.style.width = scaledViewport.width + 'px';
+      canvas.style.height = scaledViewport.height + 'px';
+      page.render({canvasContext: ctx, viewport: scaledViewport});
       document.getElementById('pageInfo').textContent = `Page ${num} of ${pdfDoc.numPages}`;
     });
   }
+
+  document.getElementById('pdfClose').addEventListener('click', closePDF);
+  document.getElementById('prevPageBtn').addEventListener('click', () => {
+    if(currentPage > 1) {
+      currentPage--;
+      renderPage(currentPage);
+    }
+  });
+  document.getElementById('nextPageBtn').addEventListener('click', () => {
+    if(currentPage < pdfDoc.numPages) {
+      currentPage++;
+      renderPage(currentPage);
+    }
+  });
+
   function closePDF() {
     pdfModal.style.display = 'none';
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    pdfDoc = null;
+    if (pdfDoc) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pdfDoc = null;
+    }
   }
 </script>
-
 </body>
 </html>
