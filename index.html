@@ -296,15 +296,15 @@
   </div>
   <section id="projects" class="tab-content active">
     <h3 style="color: var(--primary)">Tableau Projects</h3>
-    <div class="cards-grid">
-      <div class="card" onclick="openPdfModal('https://public.tableau.com/static/pdf/BicycleShop.pdf')">
-        <img class="thumbnail" src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
+    <div class="cards-grid" id="projects">
+      <div class="card" data-pdf-url="https://public.tableau.com/static/pdf/BicycleShop.pdf" onclick="openPdfModal('https://public.tableau.com/static/pdf/BicycleShop.pdf')">
+        <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="Bicycle Shop" />
         <div class="project-title">Bicycle Shop</div>
         <p class="project-description">An interactive sales/revenue dashboard for a cycle retailer, highlighting KPIs and year-on-year trends.</p>
         <div class="author">Aashish Paudel</div>
       </div>
-      <div class="card" onclick="openPdfModal('https://public.tableau.com/static/pdf/KingCountyHouseSales.pdf')">
-        <img class="thumbnail" src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales_16941785675300/KingCountyHouseSales/1.png" alt="King County House Sales" />
+      <div class="card" data-pdf-url="https://public.tableau.com/static/pdf/KingCountyHouseSales.pdf" onclick="openPdfModal('https://public.tableau.com/static/pdf/KingCountyHouseSales.pdf')">
+        <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="King County House Sales" />
         <div class="project-title">King County House Sales</div>
         <p class="project-description">An advanced dashboard to visualize and filter property prices, market activity, and regional heatmaps for King County, Washington.</p>
         <div class="author">Aashish Paudel</div>
@@ -314,7 +314,8 @@
   <section id="resume" class="tab-content">
     <h3 style="color: var(--primary); margin-bottom: 18px;">Resume</h3>
     <div style="background: var(--card); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow);">
-      <button onclick="openPdfModal('assets/resume.pdf')" style="font-size:16px; padding: 12px 20px; border-radius: 11px; background: var(--primary); color: #fff; font-weight:600; border:none; cursor:pointer;">View Resume PDF</button>
+      <!-- Resume pop-up opens on tab click, so no button -->
+      <p>Resume PDF will open automatically when this tab is selected.</p>
     </div>
   </section>
   <section id="caseStudies" class="tab-content">
@@ -380,6 +381,7 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -419,7 +421,39 @@ const researchPapers = [
   }
 ];
 
-// Tab navigation
+const pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js';
+
+// Render PDF first page thumbnail on img element
+function renderPdfThumbnail(pdfUrl, imgElement) {
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    pdf.getPage(1).then(page => {
+      const viewport = page.getViewport({ scale: 0.2 });
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+      page.render({canvasContext: ctx, viewport: viewport}).promise.then(() => {
+        imgElement.src = canvas.toDataURL();
+      });
+    });
+  });
+}
+
+function buildThumbnails(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const cards = container.querySelectorAll('.card');
+  cards.forEach(card => {
+    const pdfUrl = card.getAttribute('data-pdf-url');
+    const img = card.querySelector('img.thumbnail');
+    if (pdfUrl && img) {
+      renderPdfThumbnail(pdfUrl, img);
+    }
+  });
+}
+
+// Tab navigation with Resume auto-open
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabContents = document.querySelectorAll('.tab-content');
 tabButtons.forEach(btn => {
@@ -427,37 +461,52 @@ tabButtons.forEach(btn => {
     tabButtons.forEach(b => b.classList.remove('active'));
     tabContents.forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
-    if (btn.dataset.tab === 'caseStudies') {
-      const grid = document.getElementById('caseStudiesGrid');
-      if (grid && grid.innerHTML.trim() === '') {
-        grid.innerHTML = caseStudies.map(cs => `
-          <div class="card document-card" onclick="openPdfModal('${cs.pdfUrl}')">
-            <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="${cs.title}">
-            <div class="project-title">${cs.title}</div>
-            <div class="project-description">${cs.description}</div>
-            <div class="author">Aashish Paudel</div>
-          </div>
-        `).join('');
+    if (btn.dataset.tab === 'resume') {
+      openPdfModal('assets/resume.pdf');
+    } else {
+      closePdfModal();
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'caseStudies') {
+        const grid = document.getElementById('caseStudiesGrid');
+        if (grid && grid.innerHTML.trim() === '') {
+          grid.innerHTML = caseStudies.map(cs => `
+            <div class="card document-card" data-pdf-url="${cs.pdfUrl}" onclick="openPdfModal('${cs.pdfUrl}')">
+              <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="${cs.title}">
+              <div class="project-title">${cs.title}</div>
+              <div class="project-description">${cs.description}</div>
+              <div class="author">Aashish Paudel</div>
+            </div>
+          `).join('');
+          buildThumbnails('caseStudiesGrid');
+        }
       }
-    }
-    if (btn.dataset.tab === 'researchPapers') {
-      const grid = document.getElementById('researchGrid');
-      if (grid && grid.innerHTML.trim() === '') {
-        grid.innerHTML = researchPapers.map(rp => `
-          <div class="card document-card" onclick="openPdfModal('${rp.pdfUrl}')">
-            <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="${rp.title}">
-            <div class="project-title">${rp.title}</div>
-            <div class="project-description">${rp.description}</div>
-            <div class="author">Aashish Paudel</div>
-          </div>
-        `).join('');
+      if (btn.dataset.tab === 'researchPapers') {
+        const grid = document.getElementById('researchGrid');
+        if (grid && grid.innerHTML.trim() === '') {
+          grid.innerHTML = researchPapers.map(rp => `
+            <div class="card document-card" data-pdf-url="${rp.pdfUrl}" onclick="openPdfModal('${rp.pdfUrl}')">
+              <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="${rp.title}">
+              <div class="project-title">${rp.title}</div>
+              <div class="project-description">${rp.description}</div>
+              <div class="author">Aashish Paudel</div>
+            </div>
+          `).join('');
+          buildThumbnails('researchGrid');
+        }
+      }
+      if (btn.dataset.tab === 'projects') {
+        buildThumbnails('projects');
       }
     }
   });
 });
 
-// PDF modal functions
+// On load render thumbnails for projects tab
+window.addEventListener('DOMContentLoaded', () => {
+  buildThumbnails('projects');
+});
+
+// PDF Modal Controls
 let pdfDoc = null, pageNum = 1, pdfUrl = '';
 
 function openPdfModal(url) {
@@ -478,7 +527,7 @@ function closePdfModal() {
 document.getElementById('pdfClose').onclick = closePdfModal;
 
 function loadPdf(url) {
-  pdfjsLib.getDocument(url).promise.then(function(pdf) {
+  pdfjsLib.getDocument(url).promise.then(pdf => {
     pdfDoc = pdf;
     pageNum = 1;
     renderPage(pageNum);
@@ -486,33 +535,36 @@ function loadPdf(url) {
 }
 
 function renderPage(num) {
-  pdfDoc.getPage(num).then(function(page) {
-    let canvas = document.getElementById('pdfCanvas');
-    let ctx = canvas.getContext('2d');
-    let viewport = page.getViewport({ scale: 1.5 });
+  pdfDoc.getPage(num).then(page => {
+    const canvas = document.getElementById('pdfCanvas');
+    const ctx = canvas.getContext('2d');
+    const viewport = page.getViewport({scale: 1.5});
     canvas.height = viewport.height;
     canvas.width = viewport.width;
 
-    page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function() {
+    page.render({canvasContext: ctx, viewport: viewport}).promise.then(() => {
       document.getElementById('pageInfo').textContent = `Page ${num} of ${pdfDoc.numPages}`;
     });
   });
 }
 
-document.getElementById('prevPage').onclick = function() {
+document.getElementById('prevPage').onclick = () => {
   if (!pdfDoc || pageNum <= 1) return;
   pageNum--;
   renderPage(pageNum);
 };
-document.getElementById('nextPage').onclick = function() {
+
+document.getElementById('nextPage').onclick = () => {
   if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
   pageNum++;
   renderPage(pageNum);
 };
-document.getElementById('downloadPdf').onclick = function() {
+
+document.getElementById('downloadPdf').onclick = () => {
   if (pdfUrl) window.open(pdfUrl, '_blank');
 };
-document.addEventListener('keydown', function(e) {
+
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closePdfModal();
 });
 </script>
