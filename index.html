@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aashish Paudel — Portfolio</title>
+<title>Aashish Paudel</title>
 <style>
   :root {
     --primary: #6558f5;
@@ -278,7 +278,7 @@
   <section style="text-align: center; margin-bottom: 44px;">
     <h2 style="font-size: 36px; color: var(--primary); font-weight:900;">Hi 👋, I'm Aashish</h2>
     <p style="font-size: 19px; color: var(--muted); max-width: 700px; margin: 16px auto 0;">
-      I build financial strategies with data-driven insights, pricing strategy and research, backed by academic and industry projects.
+      I turn data into insights to drive pricing strategies, financial models, and business decisions, with experience in financial services, pricing and category management. I hold a Bachelor's in Computer Science from London Metropolitan University, with coursework in Applied Statistics, Finance, and Pricing from Webster University.
     </p>
     
     <!-- Location and Contact Info -->
@@ -315,7 +315,6 @@
         </svg>
       </a>
     </div>
-    
   </section>
 
   <div class="tabs" role="tablist" aria-label="Portfolio section tabs">
@@ -356,12 +355,23 @@
     <div class="info-card skills" aria-label="Skills">
       <h3>Skills</h3>
       <div class="skill-tags">
-        <span class="skill-tag">Python (Pandas)</span>
+        <span class="skill-tag">Python</span>
         <span class="skill-tag">SQL</span>
-        <span class="skill-tag">SAS</span>
         <span class="skill-tag">Tableau</span>
-        <span class="skill-tag">dbt</span>
+        <span class="skill-tag">MS Excel</span>
+        <span class="skill-tag">ETL</span>
         <span class="skill-tag">Financial Modeling</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">Scikit-learn</span>
+        <span class="skill-tag">Seaborn</span>
+        <span class="skill-tag">Matplotlib</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">Reporting</span>
+        <span class="skill-tag">Dashboarding</span>
+        <span class="skill-tag">Data Analysis</span>
+        <span class="skill-tag">Pricing Analysis</span>
+        <span class="skill-tag">Product Analysis</span>
+        <span class="skill-tag">Financial Analysis</span>
       </div>
     </div>
     <div class="info-card education" aria-label="Education & Certifications">
@@ -417,36 +427,28 @@
 
   function renderPage(num) {
     pdfDoc.getPage(num).then(page => {
-      // Use full viewport height for maximum readability
       const maxHeight = window.innerHeight;
-      const maxWidth = window.innerWidth - 260; // Space for side controls
+      const maxWidth = window.innerWidth - 260;
       
-      // Get device pixel ratio for high DPI displays (minimum 2 for quality)
       const pixelRatio = Math.max(window.devicePixelRatio || 1, 2);
       
-      // Start with very high scale for maximum text readability
       let scale = 4.5;
       const viewport = page.getViewport({ scale: 1 });
       
-      // Calculate optimal scale to fit screen
       const scaleHeight = maxHeight / viewport.height;
       const scaleWidth = maxWidth / viewport.width;
-      scale = Math.min(scaleHeight, scaleWidth, 5.0); // Allow up to 5x zoom
+      scale = Math.min(scaleHeight, scaleWidth, 5.0);
       
-      // Apply pixel ratio for ultra-sharp rendering
       const outputScale = pixelRatio * scale;
       
       const scaledViewport = page.getViewport({ scale: outputScale });
       
-      // Set canvas size accounting for pixel ratio
       pdfCanvas.width = scaledViewport.width;
       pdfCanvas.height = scaledViewport.height;
       
-      // Scale CSS size back down
       pdfCanvas.style.width = (scaledViewport.width / pixelRatio) + 'px';
       pdfCanvas.style.height = (scaledViewport.height / pixelRatio) + 'px';
       
-      // Render with highest quality settings
       const renderContext = {
         canvasContext: ctx,
         viewport: scaledViewport,
@@ -455,12 +457,10 @@
         renderInteractiveForms: false
       };
       
-      // Enable image smoothing for better quality
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
       
       page.render(renderContext).promise.then(() => {
-        // Apply additional sharpening after render
         ctx.filter = 'contrast(1.05) brightness(1.02)';
       });
       
@@ -506,102 +506,16 @@
     }
   };
 
-  // Close modal when clicking outside
   modal.onclick = (e) => {
     if (e.target === modal) {
       closeBtn.onclick();
     }
   };
 
-  // Tabs/select view
   const tabs = document.querySelectorAll('.tab-button');
   const tabContents = document.querySelectorAll('.tab-content');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
-      tabContents.forEach(tc => tc.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
-      if(tab.dataset.tab === 'resume') openPDF('assets/resume/Resume.pdf');
-    });
-  });
-
-  // Case studies and research papers data
-  const caseStudies = [
-    {
-      title: 'Pricing and Channel Strategy Analysis',
-      description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
-      pdfUrl: 'assets/case-studies/CaseStudy4.pdf',
-      thumbnail: 'assets/case-studies/CaseStudy4.pdf' // Will generate from PDF
-    }
-  ];
-
-  const researchPapers = [
-    {
-      title: 'Conjoint Analysis for Pricing Research',
-      description: 'Research paper on using conjoint analysis to optimize B2B SaaS pricing.',
-      pdfUrl: 'assets/research-papers/ResearchPaper.pdf',
-      thumbnail: 'assets/research-papers/ResearchPaper.pdf' // Will generate from PDF
-    }
-  ];
-
-  // Generate PDF thumbnail
-  function generatePdfThumbnail(pdfUrl, callback) {
-    pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-      pdf.getPage(1).then(page => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const viewport = page.getViewport({ scale: 0.5 });
-        
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        
-        page.render({
-          canvasContext: ctx,
-          viewport: viewport
-        }).promise.then(() => {
-          callback(canvas.toDataURL());
-        });
-      });
-    }).catch(err => {
-      console.error('Error generating thumbnail:', err);
-      callback('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="250"><rect width="200" height="250" fill="%23f0f0f0"/><text x="50%" y="50%" text-anchor="middle" fill="%236558f5" font-size="16">PDF Preview</text></svg>');
-    });
-  }
-
-  // Render grids on load
-  function renderGrid(container, items) {
-    container.innerHTML = '';
-    items.forEach(item => {
-      const c = document.createElement('div');
-      c.className = 'card document-card';
-      c.tabIndex = 0;
-      c.role = 'button';
-      c.setAttribute('aria-label', `${item.title} - Click to view document`);
-      
-      // Create placeholder while loading
-      c.innerHTML = `
-        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='140'><rect width='200' height='140' fill='%23f0f0f0'/><text x='50%' y='50%' text-anchor='middle' fill='%236558f5' font-size='14'>Loading...</text></svg>" class="thumbnail" alt="${item.title}" />
-        <div class="project-title">${item.title}</div>
-        <p class="project-description">${item.description}</p>
-        <div class="author">Aashish Paudel</div>
-      `;
-      
-      c.addEventListener('click', () => openPDF(item.pdfUrl, item.title));
-      container.appendChild(c);
-      
-      // Generate actual thumbnail
-      generatePdfThumbnail(item.pdfUrl, (thumbnailUrl) => {
-        const img = c.querySelector('img');
-        if (img) img.src = thumbnailUrl;
-      });
-    });
-  }
-  renderGrid(document.getElementById('caseStudiesGrid'), caseStudies);
-  renderGrid(document.getElementById('researchGrid'), researchPapers);
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-</body>
-</html>
+      tabContents.forEach(tc => tc.classList
