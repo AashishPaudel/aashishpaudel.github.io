@@ -462,7 +462,7 @@ tabButtons.forEach(btn => {
     tabContents.forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     if (btn.dataset.tab === 'resume') {
-      openPdfModal('assets/resume/resume.pdf');
+      openPdfModal('assets/resume/Resume.pdf');
     } else {
       closePdfModal();
       document.getElementById(btn.dataset.tab).classList.add('active');
