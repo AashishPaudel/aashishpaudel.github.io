@@ -1,251 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aashish Paudel</title>
-<style>
-  :root {
-    --primary: #6558f5;
-    --bg: #f7f8fb;
-    --card: #fff;
-    --text: #222;
-    --muted: #606070;
-    --radius: 18px;
-    --shadow: 0 8px 26px rgba(101, 88, 245, 0.12);
-    --max-width: 1140px;
-    font-family: 'Inter', sans-serif;
-  }
-  body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; }
-  a { color: var(--primary); text-decoration: none; font-weight: 600; }
-  main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px; }
-  .tabs { display: flex; justify-content: center; gap: 30px; margin: 38px 0; }
-  .tab-button {
-    background: var(--card); color: var(--text); font-weight: 700;
-    font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
-    border: none; cursor: pointer; transition: all 0.25s;
-    box-shadow: 0 2px 10px rgba(101,88,245,0.05);
-  }
-  .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 32px;
-    margin-bottom: 48px;
-  }
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    user-select: none;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    height: 390px;
-    transition: box-shadow 0.25s ease;
-    overflow: hidden;
-  }
-  .card:hover, .card:focus-within { box-shadow: 0 14px 40px var(--primary);}
-  .card img.thumbnail {
-    width: 100%;
-    height: 176px;
-    object-fit: cover;
-    border-radius: var(--radius);
-    margin-bottom: 18px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
-  }
-  .card.document-card {
-    height: 280px;
-  }
-  .card.document-card img.thumbnail {
-    height: 140px;
-    object-fit: cover;
-  }
-  .card.document-card .project-title {
-    font-size: 18px;
-    margin: 12px 0 6px 0;
-  }
-  .card.document-card .project-description {
-    font-size: 13px;
-    line-height: 1.4;
-  }
-  .project-title { font-weight: 800; font-size: 20px; margin: 16px 0 8px 0; color: var(--primary);}
-  .project-description { flex-grow: 1; font-weight: 500; font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
-  .author { font-size: 12px; font-family: monospace; color: var(--muted);}
-  .info-row {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin-top: 60px;
-  }
-  .info-card {
-    background: var(--card);
-    padding: 32px 28px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    flex: 1 1 320px;
-    min-width: 260px;
-  }
-  .info-card h3 {
-    color: var(--primary);
-    margin-top: 0;
-    margin-bottom: 24px;
-    font-weight: 900;
-    font-size: 24px;
-    letter-spacing: 0.02em;
-  }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 14px; }
-  .skill-tag {
-    background: var(--primary); color: white; padding: 10px 20px;
-    border-radius: 999px; font-weight: 700; user-select: none; font-size: 14px;
-  }
-  .education ul { padding-left: 18px; font-size: 16px; color: var(--muted);}
-  .education li { margin-bottom: 14px; line-height: 1.7;}
-  footer {
-    background: var(--primary); color: white; text-align: center; font-weight: 700;
-    padding: 32px 12px; border-radius: var(--radius) var(--radius) 0 0; margin-top: 100px;
-  }
-  #pdfModal {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.92); display: none; justify-content: center; align-items: center; z-index: 10000;
-  }
-  #pdfContent {
-    background: transparent;
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  canvas#pdfCanvas {
-    display: block;
-    background: #fff;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
-    max-width: calc(100vw - 260px);
-    max-height: 100vh;
-    width: auto;
-    height: auto;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-    -ms-interpolation-mode: nearest-neighbor;
-  }
-  .left-controls {
-    position: fixed;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 3;
-  }
-  .left-controls button,
-  .left-controls .info-display {
-    background: var(--primary);
-    border: none;
-    border-radius: 16px;
-    padding: 16px 24px;
-    font-weight: 700;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 140px;
-    text-align: center;
-  }
-  .left-controls .info-display {
-    background: white;
-    color: var(--text);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    cursor: default;
-  }
-  .left-controls button:hover:not(:disabled) {
-    background: #7d6fff;
-    transform: translateX(5px);
-    box-shadow: 0 4px 20px rgba(101, 88, 245, 0.4);
-  }
-  .left-controls button:disabled {
-    background: #bdb7ff;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-  .right-controls {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 3;
-  }
-  .right-controls button {
-    background: linear-gradient(135deg, #6558f5, #8d89ff);
-    border: none;
-    border-radius: 16px;
-    padding: 16px 24px;
-    font-weight: 700;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 140px;
-    box-shadow: 0 4px 20px rgba(101, 88, 245, 0.3);
-  }
-  .right-controls button:hover {
-    transform: translateX(-5px);
-    box-shadow: 0 6px 30px rgba(101, 88, 245, 0.5);
-  }
-  #pdfClose {
-    background: linear-gradient(135deg, #ff4757, #ff6b81);
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: unset;
-  }
-  @media (max-width: 900px) {
-    canvas#pdfCanvas {
-      max-width: calc(100vw - 40px);
-      max-height: calc(100vh - 160px);
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aashish Paudel</title>
+  <style>
+    :root {
+      --primary: #6558f5;
+      --bg: #f7f8fb;
+      --card: #fff;
+      --text: #222;
+      --muted: #606070;
+      --radius: 18px;
+      --shadow: 0 8px 26px rgba(101, 88, 245, 0.12);
+      --max-width: 1140px;
+      font-family: 'Inter', sans-serif;
     }
-    .left-controls,
-    .right-controls {
-      position: fixed;
-      flex-direction: row;
-      left: 50%;
-      right: auto;
-      top: auto;
-      transform: translateX(-50%);
+    body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; }
+    a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    main { max-width: var(--max-width); margin: 36px auto; padding: 0 20px; }
+    .tabs { display: flex; justify-content: center; gap: 30px; margin: 38px 0; }
+    .tab-button {
+      background: var(--card); color: var(--text); font-weight: 700;
+      font-size: 16px; padding: 13px 36px; border-radius: var(--radius);
+      border: none; cursor: pointer; transition: all 0.25s;
+      box-shadow: 0 2px 10px rgba(101,88,245,0.05);
     }
-    .left-controls {
-      bottom: 20px;
-      top: auto;
+    .tab-button.active { background: var(--primary); color: #fff; box-shadow: var(--shadow);}
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
     }
-    .right-controls {
-      top: 20px;
-      bottom: auto;
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      user-select: none;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 390px;
+      transition: box-shadow 0.25s ease;
+      overflow: hidden;
     }
-    .left-controls button,
-    .right-controls button,
-    .left-controls .info-display {
-      min-width: auto;
-      padding: 12px 20px;
-      font-size: 14px;
+    .card:hover, .card:focus-within { box-shadow: 0 14px 40px var(--primary);}
+    .card img.thumbnail {
+      width: 100%;
+      height: 176px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 18px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
     }
-  }
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+    .card.document-card {
+      height: 280px;
+    }
+    .card.document-card img.thumbnail {
+      height: 140px;
+      object-fit: cover;
+    }
+    .card.document-card .project-title {
+      font-size: 18px;
+      margin: 12px 0 6px 0;
+    }
+    .card.document-card .project-description {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .project-title { font-weight: 800; font-size: 20px; margin: 16px 0 8px 0; color: var(--primary);}
+    .project-description { flex-grow: 1; font-weight: 500; font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+    .author { font-size: 12px; font-family: monospace; color: var(--muted);}
+    .info-row {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 60px;
+    }
+    .info-card {
+      background: var(--card);
+      padding: 32px 28px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex: 1 1 320px;
+      min-width: 260px;
+    }
+    .info-card h3 {
+      color: var(--primary);
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-weight: 900;
+      font-size: 24px;
+      letter-spacing: 0.02em;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 14px; }
+    .skill-tag {
+      background: var(--primary); color: white; padding: 10px 20px;
+      border-radius: 999px; font-weight: 700; user-select: none; font-size: 14px;
+    }
+    .education ul { padding-left: 18px; font-size: 16px; color: var(--muted);}
+    .education li { margin-bottom: 14px; line-height: 1.7;}
+    footer {
+      background: var(--primary); color: white; text-align: center; font-weight: 700;
+      padding: 32px 12px; border-radius: var(--radius) var(--radius) 0 0; margin-top: 100px;
+    }
+  </style>
 </head>
 <body>
 <main>
@@ -268,17 +131,17 @@
       </div>
     </div>
     <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 28px;">
-      <a href="https://github.com/AashishPaudel" target="_blank" rel="noopener noreferrer" style="color: var(--text); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.08);" onmouseover="this.style.background='var(--primary)'; this.style.color='white'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 4px 16px rgba(101,88,245,0.3)';" onmouseout="this.style.background='var(--card)'; this.style.color='var(--text)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)';" aria-label="GitHub Profile">
+      <a href="https://github.com/AashishPaudel" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" style="color: var(--text); display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease;">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
         </svg>
       </a>
-      <a href="https://www.linkedin.com/in/aashish-paudel-987589355/" target="_blank" rel="noopener noreferrer" style="color: var(--text); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.08);" onmouseover="this.style.background='var(--primary)'; this.style.color='white'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 4px 16px rgba(101,88,245,0.3)';" onmouseout="this.style.background='var(--card)'; this.style.color='var(--text)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)';" aria-label="LinkedIn Profile">
+      <a href="https://www.linkedin.com/in/aashish-paudel-987589355/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" style="color: var(--text); display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease;">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
         </svg>
       </a>
-      <a href="mailto:paudel.aashish8@gmail.com" style="color: var(--text); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.08);" onmouseover="this.style.background='var(--primary)'; this.style.color='white'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 4px 16px rgba(101,88,245,0.3)';" onmouseout="this.style.background='var(--card)'; this.style.color='var(--text)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)';" aria-label="Email">
+      <a href="mailto:paudel.aashish8@gmail.com" style="color: var(--text); display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease;" aria-label="Email">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
           <polyline points="22,6 12,13 2,6"></polyline>
@@ -286,14 +149,12 @@
       </a>
     </div>
   </section>
-
   <div class="tabs">
     <button class="tab-button active" data-tab="projects">Projects</button>
     <button class="tab-button" data-tab="resume">Resume</button>
     <button class="tab-button" data-tab="caseStudies">Case Studies</button>
     <button class="tab-button" data-tab="researchPapers">Research Papers</button>
   </div>
-
   <section id="projects" class="tab-content active">
     <h3 style="color: var(--primary)">Tableau Projects</h3>
     <div class="cards-grid">
@@ -311,8 +172,13 @@
       </div>
     </div>
   </section>
-
-  <section id="resume" class="tab-content"></section>
+  <section id="resume" class="tab-content">
+    <h3 style="color: var(--primary); margin-bottom: 18px;">Resume</h3>
+    <div style="background: var(--card); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow);">
+      <p>Download my resume as PDF: <a href="assets/resume.pdf" target="_blank">View/Download Resume</a></p>
+      <!-- Or embed: <iframe src="assets/resume.pdf" width="100%" height="550"></iframe> -->
+    </div>
+  </section>
   <section id="caseStudies" class="tab-content">
     <h3 style="color: var(--primary); margin-bottom: 20px;">Case Studies</h3>
     <div class="cards-grid" id="caseStudiesGrid"></div>
@@ -355,25 +221,84 @@
     </div>
   </div>
 </main>
-<footer>© <span id="year"></span> Aashish Paudel • <a href="mailto:paudel.aashish8@gmail.com" style="color: white; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.3); transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='white';" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';">paudel.aashish8@gmail.com</a> • <a href="tel:+14434224162" style="color: white; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.3); transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='white';" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';">443-422-4162</a></footer>
-
-<div id="pdfModal">
-  <div id="pdfContent">
-    <canvas id="pdfCanvas"></canvas>
-    <div class="left-controls">
-      <button id="prevPage">◀ Previous</button>
-      <div class="info-display" id="pageInfo">Page 1 of 1</div>
-      <button id="nextPage">Next ▶</button>
-    </div>
-    <div class="right-controls">
-      <button id="pdfClose">✕</button>
-      <button id="downloadPdf">⬇ Download</button>
-    </div>
-  </div>
-</div>
-
+<footer>
+  © <span id="year"></span> Aashish Paudel • 
+  <a href="mailto:paudel.aashish8@gmail.com" style="color: white; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.3); transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='white';" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';">paudel.aashish8@gmail.com</a> • 
+  <a href="tel:+14434224162" style="color: white; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.3); transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='white';" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';">443-422-4162</a>
+</footer>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-const caseStudies=[{title:'Strategic Supplier Selection and Pricing Optimization',description:'Strategic analysis of supplier selection and pricing optimization strategies.',pdfUrl:'assets/case-studies/CaseStudy1.pdf'},{title:'Strategic Sourcing and Pricing Decision in the Semiconductor Supply Chain',description:'Analysis of strategic sourcing and pricing decisions in semiconductor supply chain management.',pdfUrl:'assets/case-studies/CaseStudy2.pdf'},{title:'Value-Based Supplier Selection in Capital-Intensive Manufacturing',description:'Value-based approach to supplier selection in capital-intensive manufacturing environments.',pdfUrl:'assets/case-studies/CaseStudy3.pdf'},{title:'Pricing and Channel Strategy Analysis',description:'Detailed pricing & channel strategy case study showing margin and positioning effects.',pdfUrl:'assets/case-studies/CaseStudy4.pdf'}];</script>
+
+const caseStudies = [
+  {
+    title: 'Strategic Supplier Selection and Pricing Optimization',
+    description: 'Strategic analysis of supplier selection and pricing optimization strategies.',
+    pdfUrl: 'assets/case-studies/CaseStudy1.pdf'
+  },
+  {
+    title: 'Strategic Sourcing and Pricing Decision in the Semiconductor Supply Chain',
+    description: 'Analysis of strategic sourcing and pricing decisions in semiconductor supply chain management.',
+    pdfUrl: 'assets/case-studies/CaseStudy2.pdf'
+  },
+  {
+    title: 'Value-Based Supplier Selection in Capital-Intensive Manufacturing',
+    description: 'Value-based approach to supplier selection in capital-intensive manufacturing environments.',
+    pdfUrl: 'assets/case-studies/CaseStudy3.pdf'
+  },
+  {
+    title: 'Pricing and Channel Strategy Analysis',
+    description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
+    pdfUrl: 'assets/case-studies/CaseStudy4.pdf'
+  }
+];
+const researchPapers = [
+  {
+    title: 'Dynamic Pricing and Retail Revenue',
+    description: 'A quantitative analysis on how dynamic pricing models affect retail revenue streams.',
+    pdfUrl: 'assets/research-papers/ResearchPaper1.pdf'
+  },
+  {
+    title: 'Quantifying Customer Preference in B2B Procurement',
+    description: 'Utilizing conjoint analysis for optimal B2B pricing and supplier negotiation.',
+    pdfUrl: 'assets/research-papers/ResearchPaper2.pdf'
+  }
+];
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'caseStudies') {
+      const grid = document.getElementById('caseStudiesGrid');
+      if (grid && grid.innerHTML.trim() === '') {
+        grid.innerHTML = caseStudies.map(cs => `
+          <div class="card document-card" onclick="window.open('${cs.pdfUrl}','_blank')">
+            <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="${cs.title}">
+            <div class="project-title">${cs.title}</div>
+            <div class="project-description">${cs.description}</div>
+            <div class="author">Aashish Paudel</div>
+          </div>
+        `).join('');
+      }
+    }
+    if (btn.dataset.tab === 'researchPapers') {
+      const grid = document.getElementById('researchGrid');
+      if (grid && grid.innerHTML.trim() === '') {
+        grid.innerHTML = researchPapers.map(rp => `
+          <div class="card document-card" onclick="window.open('${rp.pdfUrl}','_blank')">
+            <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="${rp.title}">
+            <div class="project-title">${rp.title}</div>
+            <div class="project-description">${rp.description}</div>
+            <div class="author">Aashish Paudel</div>
+          </div>
+        `).join('');
+      }
+    }
+  });
+});
+</script>
 </body>
 </html>
