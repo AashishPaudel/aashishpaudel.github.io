@@ -298,13 +298,13 @@
     <h3 style="color: var(--primary)">Tableau Projects</h3>
     <div class="cards-grid" id="projects">
       <div class="card" data-pdf-url="https://public.tableau.com/static/pdf/BicycleShop.pdf" onclick="openPdfModal('https://public.tableau.com/static/pdf/BicycleShop.pdf')">
-        <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="Bicycle Shop" />
+        <img class="thumbnail" src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
         <div class="project-title">Bicycle Shop</div>
         <p class="project-description">An interactive sales/revenue dashboard for a cycle retailer, highlighting KPIs and year-on-year trends.</p>
         <div class="author">Aashish Paudel</div>
       </div>
       <div class="card" data-pdf-url="https://public.tableau.com/static/pdf/KingCountyHouseSales.pdf" onclick="openPdfModal('https://public.tableau.com/static/pdf/KingCountyHouseSales.pdf')">
-        <img class="thumbnail" src="assets/thumbnail-placeholder.png" alt="King County House Sales" />
+        <img class="thumbnail" src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales_16941785675300/KingCountyHouseSales/1.png" alt="King County House Sales" />
         <div class="project-title">King County House Sales</div>
         <p class="project-description">An advanced dashboard to visualize and filter property prices, market activity, and regional heatmaps for King County, Washington.</p>
         <div class="author">Aashish Paudel</div>
@@ -314,7 +314,6 @@
   <section id="resume" class="tab-content">
     <h3 style="color: var(--primary); margin-bottom: 18px;">Resume</h3>
     <div style="background: var(--card); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow);">
-      <!-- Resume pop-up opens on tab click, so no button -->
       <p>Resume PDF will open automatically when this tab is selected.</p>
     </div>
   </section>
@@ -424,7 +423,6 @@ const researchPapers = [
 const pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js';
 
-// Render PDF first page thumbnail on img element
 function renderPdfThumbnail(pdfUrl, imgElement) {
   pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
     pdf.getPage(1).then(page => {
@@ -453,7 +451,6 @@ function buildThumbnails(containerId) {
   });
 }
 
-// Tab navigation with Resume auto-open
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabContents = document.querySelectorAll('.tab-content');
 tabButtons.forEach(btn => {
@@ -495,13 +492,12 @@ tabButtons.forEach(btn => {
         }
       }
       if (btn.dataset.tab === 'projects') {
-        buildThumbnails('projects');
+        document.getElementById('projects').classList.add('active');
       }
     }
   });
 });
 
-// On load render thumbnails for projects tab
 window.addEventListener('DOMContentLoaded', () => {
   buildThumbnails('projects');
 });
