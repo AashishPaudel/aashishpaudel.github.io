@@ -287,23 +287,23 @@
     </div>
   </section>
 
-  <div class="tabs" role="tablist" aria-label="Portfolio section tabs">
-    <button class="tab-button active" data-tab="projects" aria-selected="true">Projects</button>
-    <button class="tab-button" data-tab="resume" aria-selected="false">Resume</button>
-    <button class="tab-button" data-tab="caseStudies" aria-selected="false">Case Studies</button>
-    <button class="tab-button" data-tab="researchPapers" aria-selected="false">Research Papers</button>
+  <div class="tabs">
+    <button class="tab-button active" data-tab="projects">Projects</button>
+    <button class="tab-button" data-tab="resume">Resume</button>
+    <button class="tab-button" data-tab="caseStudies">Case Studies</button>
+    <button class="tab-button" data-tab="researchPapers">Research Papers</button>
   </div>
 
-  <section id="projects" class="tab-content active" role="tabpanel">
+  <section id="projects" class="tab-content active">
     <h3 style="color: var(--primary)">Tableau Projects</h3>
-    <div class="cards-grid" id="projectsGrid">
-      <div class="card" tabindex="0" role="link" aria-label="Open Bicycle Shop Tableau Project" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/BicycleShop_17412757649010/Dashboard1', '_blank')">
+    <div class="cards-grid">
+      <div class="card" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/BicycleShop_17412757649010/Dashboard1', '_blank')">
         <img class="thumbnail" src="https://public.tableau.com/static/images/Bi/BicycleShop_17412757649010/Dashboard1/1.png" alt="Bicycle Shop" />
         <div class="project-title">Bicycle Shop</div>
         <p class="project-description">An interactive sales/revenue dashboard for a cycle retailer, highlighting KPIs and year-on-year trends.</p>
         <div class="author">Aashish Paudel</div>
       </div>
-      <div class="card" tabindex="0" role="link" aria-label="Open King County House Sales Tableau Project" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/KingCountyHouseSales_16941785675300/KingCountyHouseSales', '_blank')">
+      <div class="card" onclick="window.open('https://public.tableau.com/app/profile/aashish.paudel/viz/KingCountyHouseSales_16941785675300/KingCountyHouseSales', '_blank')">
         <img class="thumbnail" src="https://public.tableau.com/static/images/Ki/KingCountyHouseSales_16941785675300/KingCountyHouseSales/1.png" alt="King County House Sales" />
         <div class="project-title">King County House Sales</div>
         <p class="project-description">An advanced dashboard to visualize and filter property prices, market activity, and regional heatmaps for King County, Washington.</p>
@@ -312,17 +312,17 @@
     </div>
   </section>
 
-  <section id="resume" class="tab-content" role="tabpanel"></section>
-  <section id="caseStudies" class="tab-content" role="tabpanel">
+  <section id="resume" class="tab-content"></section>
+  <section id="caseStudies" class="tab-content">
     <h3 style="color: var(--primary); margin-bottom: 20px;">Case Studies</h3>
-    <div class="cards-grid" id="caseStudiesGrid" aria-live="polite" aria-label="Case Studies"></div>
+    <div class="cards-grid" id="caseStudiesGrid"></div>
   </section>
-  <section id="researchPapers" class="tab-content" role="tabpanel">
+  <section id="researchPapers" class="tab-content">
     <h3 style="color: var(--primary); margin-bottom: 20px;">Research Papers</h3>
-    <div class="cards-grid" id="researchGrid" aria-live="polite" aria-label="Research Papers"></div>
+    <div class="cards-grid" id="researchGrid"></div>
   </section>
-  <div class="info-row" id="education-section">
-    <div class="info-card skills" aria-label="Skills">
+  <div class="info-row">
+    <div class="info-card skills">
       <h3>Skills</h3>
       <div class="skill-tags">
         <span class="skill-tag">Python</span>
@@ -344,7 +344,7 @@
         <span class="skill-tag">Financial Analysis</span>
       </div>
     </div>
-    <div class="info-card education" aria-label="Education & Certifications">
+    <div class="info-card education">
       <h3>Education & Certifications</h3>
       <ul>
         <li>Bachelor of Science (Hons) Computing — London Metropolitan University</li>
@@ -357,7 +357,7 @@
 </main>
 <footer>© <span id="year"></span> Aashish Paudel • <a href="mailto:paudel.aashish8@gmail.com" style="color: white; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.3); transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='white';" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';">paudel.aashish8@gmail.com</a> • <a href="tel:+14434224162" style="color: white; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.3); transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='white';" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';">443-422-4162</a></footer>
 
-<div id="pdfModal" role="dialog" aria-modal="true">
+<div id="pdfModal">
   <div id="pdfContent">
     <canvas id="pdfCanvas"></canvas>
     <div class="left-controls">
@@ -373,121 +373,137 @@
 </div>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  const modal = document.getElementById('pdfModal');
-  const pdfContent = document.getElementById('pdfContent');
-  const pdfCanvas = document.getElementById('pdfCanvas');
-  const ctx = pdfCanvas.getContext('2d');
-  const pageInfo = document.getElementById('pageInfo');
-  const prevPageBtn = document.getElementById('prevPage');
-  const nextPageBtn = document.getElementById('nextPage');
-  const downloadBtn = document.getElementById('downloadPdf');
-  const closeBtn = document.getElementById('pdfClose');
+const modal = document.getElementById('pdfModal');
+const pdfCanvas = document.getElementById('pdfCanvas');
+const ctx = pdfCanvas.getContext('2d');
+const pageInfo = document.getElementById('pageInfo');
+const prevPageBtn = document.getElementById('prevPage');
+const nextPageBtn = document.getElementById('nextPage');
+const downloadBtn = document.getElementById('downloadPdf');
+const closeBtn = document.getElementById('pdfClose');
 
-  let pdfDoc = null;
-  let currentPage = 1;
-  let currentPdfUrl = '';
+let pdfDoc = null;
+let currentPage = 1;
+let currentPdfUrl = '';
 
-  function renderPage(num) {
-    pdfDoc.getPage(num).then(page => {
-      const maxHeight = window.innerHeight;
-      const maxWidth = window.innerWidth - 260;
-      const pixelRatio = Math.max(window.devicePixelRatio || 1, 2);
-      let scale = 4.5;
-      const viewport = page.getViewport({ scale: 1 });
-      const scaleHeight = maxHeight / viewport.height;
-      const scaleWidth = maxWidth / viewport.width;
-      scale = Math.min(scaleHeight, scaleWidth, 5.0);
-      const outputScale = pixelRatio * scale;
-      const scaledViewport = page.getViewport({ scale: outputScale });
-      pdfCanvas.width = scaledViewport.width;
-      pdfCanvas.height = scaledViewport.height;
-      pdfCanvas.style.width = (scaledViewport.width / pixelRatio) + 'px';
-      pdfCanvas.style.height = (scaledViewport.height / pixelRatio) + 'px';
-      const renderContext = {
-        canvasContext: ctx,
-        viewport: scaledViewport,
-        intent: 'display',
-        enableWebGL: true,
-        renderInteractiveForms: false
-      };
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-      page.render(renderContext).promise.then(() => {
-        ctx.filter = 'contrast(1.05) brightness(1.02)';
-      });
-      currentPage = num;
-      pageInfo.textContent = `Page ${currentPage} of ${pdfDoc.numPages}`;
-      prevPageBtn.disabled = currentPage <= 1;
-      nextPageBtn.disabled = currentPage >= pdfDoc.numPages;
+function renderPage(num) {
+  pdfDoc.getPage(num).then(page => {
+    const maxHeight = window.innerHeight;
+    const maxWidth = window.innerWidth - 260;
+    const pixelRatio = Math.max(window.devicePixelRatio || 1, 2);
+    let scale = 4.5;
+    const viewport = page.getViewport({ scale: 1 });
+    const scaleHeight = maxHeight / viewport.height;
+    const scaleWidth = maxWidth / viewport.width;
+    scale = Math.min(scaleHeight, scaleWidth, 5.0);
+    const outputScale = pixelRatio * scale;
+    const scaledViewport = page.getViewport({ scale: outputScale });
+    pdfCanvas.width = scaledViewport.width;
+    pdfCanvas.height = scaledViewport.height;
+    pdfCanvas.style.width = (scaledViewport.width / pixelRatio) + 'px';
+    pdfCanvas.style.height = (scaledViewport.height / pixelRatio) + 'px';
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    page.render({
+      canvasContext: ctx,
+      viewport: scaledViewport,
+      intent: 'display'
+    }).promise.then(() => {
+      ctx.filter = 'contrast(1.05) brightness(1.02)';
     });
-  }
-
-  function openPDF(url) {
-    modal.style.display = 'flex';
-    currentPdfUrl = url;
-    pdfjsLib.getDocument(url).promise.then(pdf => {
-      pdfDoc = pdf;
-      currentPage = 1;
-      renderPage(currentPage);
-    });
-    downloadBtn.onclick = () => {
-      const a = document.createElement('a');
-      a.href = currentPdfUrl;
-      a.download = currentPdfUrl.split('/').pop();
-      a.click();
-    };
-  }
-
-  closeBtn.onclick = () => {
-    modal.style.display = 'none';
-    pdfCanvas.width = 1;
-    pdfCanvas.height = 1;
-    pdfDoc = null;
-  };
-
-  prevPageBtn.onclick = () => {
-    if (currentPage > 1) renderPage(currentPage - 1);
-  };
-
-  nextPageBtn.onclick = () => {
-    if (currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
-  };
-
-  modal.onclick = (e) => {
-    if (e.target === modal) closeBtn.onclick();
-  };
-
-  const tabs = document.querySelectorAll('.tab-button');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tabContents.forEach(tc => tc.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
-      if(tab.dataset.tab === 'resume') openPDF('assets/resume/Resume.pdf');
-    });
+    currentPage = num;
+    pageInfo.textContent = 'Page ' + currentPage + ' of ' + pdfDoc.numPages;
+    prevPageBtn.disabled = currentPage <= 1;
+    nextPageBtn.disabled = currentPage >= pdfDoc.numPages;
   });
+}
 
-  const caseStudies = [
-    {
-      title: 'Strategic Supplier Selection and Pricing Optimization',
-      description: 'Strategic analysis of supplier selection and pricing optimization strategies.',
-      pdfUrl: 'assets/case-studies/CaseStudy1.pdf',
-      thumbnail: 'assets/case-studies/CaseStudy1.pdf'
-    },
-    {
-      title: 'Pricing and Channel Strategy Analysis',
-      description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
-      pdfUrl: 'assets/case-studies/CaseStudy4.pdf',
-      thumbnail: 'assets/case-studies/CaseStudy4.pdf'
-    }
-  ];
+function openPDF(url) {
+  modal.style.display = 'flex';
+  currentPdfUrl = url;
+  pdfjsLib.getDocument(url).promise.then(pdf => {
+    pdfDoc = pdf;
+    currentPage = 1;
+    renderPage(currentPage);
+  });
+}
 
-  const researchPapers = [
-    {
-      title: 'Conjoint Analysis for Pricing Research',
-      description: 'Research paper on using conjoint analysis to optimize B2B Saa
+closeBtn.onclick = function() {
+  modal.style.display = 'none';
+  pdfCanvas.width = 1;
+  pdfCanvas.height = 1;
+  pdfDoc = null;
+};
+
+prevPageBtn.onclick = function() {
+  if (currentPage > 1) renderPage(currentPage - 1);
+};
+
+nextPageBtn.onclick = function() {
+  if (currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
+};
+
+downloadBtn.onclick = function() {
+  const a = document.createElement('a');
+  a.href = currentPdfUrl;
+  a.download = currentPdfUrl.split('/').pop();
+  a.click();
+};
+
+modal.onclick = function(e) {
+  if (e.target === modal) closeBtn.onclick();
+};
+
+const tabs = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', function() {
+    tabs.forEach(t => t.classList.remove('active'));
+    tabContents.forEach(tc => tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab === 'resume') openPDF('assets/resume/Resume.pdf');
+  });
+});
+
+const caseStudies = [
+  {
+    title: 'Strategic Supplier Selection and Pricing Optimization',
+    description: 'Strategic analysis of supplier selection and pricing optimization strategies.',
+    pdfUrl: 'assets/case-studies/CaseStudy1.pdf'
+  },
+  {
+    title: 'Pricing and Channel Strategy Analysis',
+    description: 'Detailed pricing & channel strategy case study showing margin and positioning effects.',
+    pdfUrl: 'assets/case-studies/CaseStudy4.pdf'
+  }
+];
+
+const researchPapers = [
+  {
+    title: 'Conjoint Analysis for Pricing Research',
+    description: 'Research paper on using conjoint analysis to optimize B2B SaaS pricing.',
+    pdfUrl: 'assets/research-papers/ResearchPaper.pdf'
+  }
+];
+
+function generatePdfThumbnail(pdfUrl, callback) {
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    pdf.getPage(1).then(page => {
+      const canvas = document.createElement('canvas');
+      const ctx2 = canvas.getContext('2d');
+      const viewport = page.getViewport({ scale: 0.5 });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      page.render({
+        canvasContext: ctx2,
+        viewport: viewport
+      }).promise.then(() => {
+        callback(canvas.toDataURL());
+      });
+    });
+  }).catch(() => {
+    callback('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="140"><rect width="200" height="140" fill="%23f0f0f0"/><text x="50%" y="50%" text-anchor="middle" fill="%236558
